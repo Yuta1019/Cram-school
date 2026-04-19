@@ -9,19 +9,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand mb-0" href="{{ url('/') }}">
-                    家計簿
+                    <img src="{{ asset('images/キッズ向けプログラミング塾ロゴ+文字入り.png') }}" alt="プログラミング塾ロゴ" width="200" height="auto">
                 </a>
 
                 <div class="d-flex align-items-center gap-3">
@@ -37,14 +33,15 @@
                                 document.getElementById('logout-form').submit();
                             });
                         </script>
-                    @else
-                        <a class="text-decoration-none" href="{{ route('login') }}">ログイン</a>
-                        <a class="text-decoration-none" href="{{ route('register') }}">会員登録</a>
+                    
                     @endif
                 </div>
             </div>
         </nav>
-        @yield('content')
+
+        <div class="login-page-body">
+            @yield('content')
+        </div>
     </div>
 </body>
 </html>

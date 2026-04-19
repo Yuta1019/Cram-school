@@ -1,1 +1,235 @@
-//
+body.login-page-body {
+    margin: 0;
+    padding-top: 70px;
+    background: #eef3f8;
+    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    color: #1f2937;
+}
+
+.login-main-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 680px;
+}
+
+.login-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    gap: 0;
+    padding: 24px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.login-sidebar {
+    width: 88px;
+    background: #13294b;
+    border-radius: 18px;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-sidebar-logo {
+    color: #d7e5ff;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-sidebar-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login-sidebar-item {
+    background: #1d3a66;
+    color: #ffffff;
+    border-radius: 10px;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.login-sidebar-item.active {
+    background: #4f8df7;
+    font-weight: bold;
+}
+
+.login-app-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+    text-align: center;
+    width: 100%;
+}
+
+.login-card {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    border-radius: 18px;
+    padding: 48px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.login-logo {
+    display: block;
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+    margin: 0 auto 24px;
+}
+
+.login-title {
+    margin: 0 0 18px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+    text-align: left;
+}
+
+.login-guide-box {
+    background: #eaf4ff;
+    color: #6b7280;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.login-error-box {
+    background: #fff1f2;
+    color: #b91c1c;
+    border: 1px solid #fecdd3;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.login-form-group {
+    margin-bottom: 16px;
+}
+
+.login-label {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.login-input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #d9e0e8;
+    border-radius: 8px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    background: #f9fbfd;
+    font-size: 14px;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: #4f8df7;
+    background: #ffffff;
+}
+
+.login-submit-btn {
+    width: 50%;
+    height: 46px;
+    border: none;
+    border-radius: 8px;
+    background: #4f8df7;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px auto 18px;
+}
+
+.login-sub-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.login-sub-btn {
+    width: 100%;
+    flex: 1;
+    height: 46px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+.login-register-link {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 700px;
+}
+
+@media (max-width: 900px) {
+    .login-page-wrapper {
+        flex-direction: column;
+    }
+
+    .login-sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .login-sidebar-logo {
+        margin-bottom: 0;
+        margin-right: 16px;
+    }
+
+    .login-sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .login-sidebar-item {
+        width: auto;
+        min-width: 80px;
+        padding: 8px 10px;
+    }
+
+    .login-card {
+        max-width: 100%;
+    }
+
+    .login-sub-links {
+        flex-direction: column;
+    }
+}

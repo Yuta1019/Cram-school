@@ -18,4 +18,12 @@ use Illuminate\Support\Facades\Auth;
 //    return view('welcome');
 //});
 
+Route::get('/', function () {
+    return view('auth.login');
+})->name('top');
+
+Route::post('/signup/confirm', 'Auth\RegisterController@confirm')->name('signup.confirm');
+
 Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
