@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
@@ -39,12 +40,13 @@ class ResetPasswordController extends Controller
     protected function resetPassword($user, $password)
     {
         $this->setUserPassword($user, $password);
-
         $user->setRememberToken(Str::random(60));
-
         $user->save();
+    }
 
-        // 自動ログインせず、リダイレクトのみ
-        session()->flash('status', 'パスワードが再設定されました。ログインしてください。');
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return redirect($this->redirectPath())
+            ->with('status', 'パスワードが再設定されました。ログインしてください。');
     }
 }

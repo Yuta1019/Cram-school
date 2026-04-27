@@ -21,19 +21,7 @@
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $token }}">
-
-                    <div class="login-form-group">
-                        <label for="email" class="login-label">メールアドレス</label>
-                        <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            class="login-input"
-                            value="{{ $email ?? old('email') }}"
-                            required
-                            autofocus
-                        >
-                    </div>
+                    <input type="hidden" name="email" value="{{ $email ?? old('email') }}">
 
                     <div class="login-form-group">
                         <label for="password" class="login-label">新しいパスワード</label>

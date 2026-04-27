@@ -1,10 +1,9 @@
 @extends('layouts.app')
 @section('content')
-<body class="login-page-body">
     <div class="login-page-wrapper">
         <main class="login-main-area">
             <div class="login-app-title">
-                
+
             </div>
 
             <div class="login-card">
@@ -67,7 +66,4 @@
               </a>
         </main>
     </div>
-    <script src="{{ mix('js/app.js') }}"></script>
-</body>
-</html>
 @endsection
