@@ -1,1 +1,853 @@
-body.login-page-body{margin:0;background:#eef3f8;font-family:Yu Gothic,Hiragino Kaku Gothic ProN,Meiryo,sans-serif;color:#1f2937}.login-main-area{display:flex;flex-direction:column;align-items:flex-start;width:100%;max-width:680px}.login-page-wrapper{min-height:100vh;display:flex;gap:0;padding:24px;box-sizing:border-box;justify-content:center;align-items:flex-start}.login-sidebar{width:88px;background:#13294b;border-radius:18px;padding:14px 10px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center}.login-sidebar-logo{color:#d7e5ff;font-size:12px;font-weight:700;margin-bottom:20px;text-align:center}.login-sidebar-menu{width:100%;display:flex;flex-direction:column;gap:12px}.login-sidebar-item{background:#1d3a66;color:#fff;border-radius:10px;min-height:42px;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-size:12px;box-sizing:border-box}.login-sidebar-item.active{background:#4f8df7;font-weight:700}.login-app-title{font-size:18px;font-weight:700;color:#1f2937;margin-bottom:24px;text-align:center;width:100%}.login-card{max-width:700px;width:100%;margin:0 auto;background:#fff;border:1px solid #e3e8ef;border-radius:18px;padding:48px;box-sizing:border-box;text-align:center}.login-logo{display:block;max-width:100%;width:500px;height:auto;margin:0 auto 24px}.login-title{margin:0 0 18px;font-size:28px;font-weight:700;color:#1f2937;text-align:left}.login-guide-box{background:#eaf4ff;color:#6b7280;border-radius:8px;padding:12px 14px;font-size:13px;margin-bottom:20px}.login-error-box{background:#fff1f2;color:#b91c1c;border:1px solid #fecdd3;border-radius:8px;padding:12px;font-size:13px;margin-bottom:18px}.login-form-group{margin-bottom:16px}.login-label{display:block;font-size:13px;color:#6b7280;margin-bottom:8px;text-align:left}.login-input{width:100%;height:44px;border:1px solid #d9e0e8;border-radius:8px;padding:0 12px;box-sizing:border-box;background:#f9fbfd;font-size:14px}.login-input:focus{outline:none;border-color:#4f8df7;background:#fff}.login-submit-btn{width:50%;height:46px;border:none;border-radius:8px;background:#4f8df7;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin:8px auto 18px}.login-sub-links{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:20px}.login-sub-btn{width:100%;flex:1;height:46px;border-radius:4px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:13px;font-weight:700;box-sizing:border-box}.login-register-link{margin-top:16px;width:100%;max-width:700px}@media (max-width:900px){.login-page-wrapper{flex-direction:column}.login-sidebar{width:100%;flex-direction:row;justify-content:space-between;align-items:flex-start}.login-sidebar-logo{margin-bottom:0;margin-right:16px}.login-sidebar-menu{flex-direction:row;flex-wrap:wrap;justify-content:flex-end}.login-sidebar-item{width:auto;min-width:80px;padding:8px 10px}.login-card{max-width:100%}.login-sub-links{flex-direction:column}}
+﻿@charset "UTF-8";
+
+/* ============================================================
+   ログインページ（login.blade.php）
+   ============================================================ */
+/* ログインページ全体の背景・フォント設定 */
+body.login-page-body {
+  margin: 0;
+  padding-top: 70px;
+  background: #eef3f8;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  color: #1f2937;
+}
+
+/* ログインページ左側のメインエリア（カードを縦並びする） */
+.login-main-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 680px;
+}
+
+/* ページ全体の横並びレイアウト */
+.login-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  gap: 0;
+  padding: 24px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ログインページ左側のサイドバー */
+.login-sidebar {
+  width: 88px;
+  background: #13294b;
+  border-radius: 18px;
+  padding: 14px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* サイドバー上部のロゴテキスト */
+.login-sidebar-logo {
+  color: #d7e5ff;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* サイドバーのメニュー項目リスト */
+.login-sidebar-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* サイドバーの各メニュー項目ボタン */
+.login-sidebar-item {
+  background: #1d3a66;
+  color: #ffffff;
+  border-radius: 10px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* アクティブなメニュー項目 */
+.login-sidebar-item.active {
+  background: #4f8df7;
+  font-weight: bold;
+}
+
+/* ログインページのタイトル文字 */
+.login-app-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ログインフォームが入る白いカード */
+.login-card {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 18px;
+  padding: 48px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* カード上部のロゴ画像 */
+.login-logo {
+  display: block;
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  margin: 0 auto 24px;
+}
+
+/* ログインカードのタイトル */
+.login-title {
+  margin: 0 0 18px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #1f2937;
+  text-align: left;
+}
+
+/* ガイドメッセージボックス */
+.login-guide-box {
+  background: #eaf4ff;
+  color: #6b7280;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* エラーメッセージボックス */
+.login-error-box {
+  background: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+/* メールアドレス・パスワードなど各入力フィールド */
+.login-form-group {
+  margin-bottom: 16px;
+}
+
+/* 入力フィールドのラベルテキスト */
+.login-label {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* メールアドレス・パスワードの入力欄 */
+.login-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #d9e0e8;
+  border-radius: 8px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  background: #f9fbfd;
+  font-size: 14px;
+}
+
+/* 入力欄にフォーカスしたとき（クリックしたとき）の枠線色 */
+.login-input:focus {
+  outline: none;
+  border-color: #4f8df7;
+  background: #ffffff;
+}
+
+/* 「ログイン」送信ボタン */
+.login-submit-btn {
+  width: 50%;
+  height: 46px;
+  border: none;
+  border-radius: 8px;
+  background: #4f8df7;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 8px auto 18px;
+}
+
+/* 「パスワードお忘れの方」などのサブリンク */
+.login-sub-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* サブリンクボタン（パスワードリセット・新規登録） */
+.login-sub-btn {
+  width: 100%;
+  flex: 1;
+  height: 46px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+/* 「新規会員登録はこちら」リンクの外側コンテナ */
+.login-register-link {
+  margin-top: 16px;
+  width: 100%;
+  max-width: 700px;
+}
+
+
+/* ============================================================
+   ログイン後の共通レイアウト（resources/views/layouts/main.blade.php）
+   ============================================================ */
+/* ログイン後ページ全体の背景・フォント設定 */
+body.main-page-body {
+  margin: 0;
+  padding: 0;
+  background: #f4f6fb;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  color: #1f2937;
+}
+
+/* ============================================================
+   トップヘッダー（画面上部の白いバー）
+   左側：ロゴ画像　右側：ユーザー名＋ログアウト
+   ============================================================ */
+/* ヘッダーバー本体 */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #e3e8ef;
+  z-index: 100;
+}
+
+/* ヘッダー内側の横並びレイアウト */
+.main-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* ヘッダー左側のロゴリンク */
+.main-header-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* ヘッダーのロゴ画像サイズ */
+.main-header-logo img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+/* ヘッダー右側のエリア */
+.main-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* ヘッダー右上のユーザー名 */
+.main-header-username {
+  color: #374151;
+}
+
+/* ユーザー名とログアウトの区切り文字「 / 」 */
+.main-header-sep {
+  margin: 0 8px;
+  color: #9ca3af;
+}
+
+/* ヘッダー右上のログアウト */
+.main-header-logout {
+  color: #374151;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   ページ本体のレイアウト（サイドバー＋コンテンツの横並び）
+   ============================================================ */
+/* サイドバーとメインコンテンツを横に並べるコンテナ */
+.main-container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
+}
+
+
+/* ============================================================
+   左サイドバー（紺色の縦ナビゲーション）
+   ============================================================ */
+/* サイドバー本体（左固定・全高表示） */
+.main-sidebar {
+  width: 140px;
+  min-width: 140px;
+  background: #13294b;
+  flex-shrink: 0;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* サイドバー内のナビゲーションリスト */
+.main-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px;
+  gap: 8px;
+  flex: 1;
+}
+
+/* サイドバーの各メニューボタン */
+.main-sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 6px;
+  border-radius: 8px;
+  background: #1d3a66;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 1.4;
+  min-height: 48px;
+  box-sizing: border-box;
+  transition: background 0.15s;
+}
+
+/* メニューボタンにマウスを乗せたとき */
+.main-sidebar-item:hover {
+  background: #2c5080;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* 現在表示中のページのメニューボタン */
+.main-sidebar-item.active {
+  background: #4f8df7;
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   メインコンテンツエリア（サイドバーの右側）
+   ============================================================ */
+/* 各ページのコンテンツが表示されるエリア */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 32px;
+  background: #f4f6fb;
+  overflow-y: auto;
+}
+
+
+/* ============================================================
+   問い合わせ一覧ページ（index.blade.php）
+   ============================================================ */
+/* ページ全体のコンテナ */
+.inq-page {
+  max-width: 1200px;
+}
+
+/* ページ上部のタイトルエリア（「お問い合わせ一覧」） */
+.inq-header {
+  margin-bottom: 20px;
+}
+
+/* 「お問い合わせ一覧」の大見出し */
+.inq-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 4px;
+}
+
+
+/* ============================================================
+   絞り込み検索ツールバー
+   （生徒名・保護者名・コース・状態の入力欄＋検索・新規登録ボタン）
+   ============================================================ */
+/* ツールバー全体（横並びのフレックスコンテナ） */
+.inq-toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+/* ツールバーのテキスト入力欄 */
+.inq-toolbar-input {
+  height: 36px;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  background: #ffffff;
+  width: 140px;
+  min-width: 100px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+/* コース入力欄 */
+.inq-toolbar-input--sm {
+  width: 110px;
+}
+
+/* テキスト入力欄にフォーカスしたときの枠線色 */
+.inq-toolbar-input:focus {
+  outline: none;
+  border-color: #4f8df7;
+}
+
+/* 「状態：すべて」などのドロップダウン選択欄 */
+.inq-toolbar-select {
+  height: 36px;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  padding: 0 8px;
+  font-size: 13px;
+  background: #ffffff;
+  width: 130px;
+  min-width: 100px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ドロップダウンにフォーカスしたときの枠線色 */
+.inq-toolbar-select:focus {
+  outline: none;
+  border-color: #4f8df7;
+}
+
+/* 「検索」ボタン（青色） */
+.inq-btn-search {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background: #4f8df7;
+  color: #ffffff;
+  font-family: inherit;
+  transition: opacity 0.15s;
+}
+
+/* 検索ボタンにマウスを乗せたとき */
+.inq-btn-search:hover {
+  opacity: 0.85;
+}
+
+/* 「新規登録」ボタン */
+.inq-btn-new {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background: #13294b;
+  color: #ffffff;
+  margin-left: auto;
+  transition: opacity 0.15s;
+}
+
+/* 新規登録ボタンにマウスを乗せたとき */
+.inq-btn-new:hover {
+  opacity: 0.85;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   問い合わせ一覧テーブル（白いカード内）
+   ============================================================ */
+/* テーブルを囲む白いカード */
+.inq-table-card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* データが0件のときに表示するメッセージ */
+.inq-empty {
+  color: #6b7280;
+  font-size: 14px;
+  text-align: center;
+  padding: 56px 0;
+}
+
+/* テーブルを横スクロール可能にするラッパー */
+.inq-table-wrap {
+  overflow-x: auto;
+}
+
+/* テーブル本体 */
+.inq-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 600px;
+}
+
+/* テーブルのヘッダー行（薄いグレー背景） */
+.inq-table thead tr {
+  background: #f8fafd;
+  border-bottom: 2px solid #e3e8ef;
+}
+
+/* テーブルの列見出し（「生徒名」「保護者名」など） */
+.inq-table th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* テーブルの各データセル */
+.inq-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #f0f3f8;
+  color: #1f2937;
+  vertical-align: middle;
+}
+
+/* 最終行の下線を消す */
+.inq-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 行にマウスを乗せたとき（薄い青灰色でハイライト） */
+.inq-table tbody tr:hover {
+  background: #f8fafd;
+}
+
+
+/* ============================================================
+   状態バッジ（「未対応」「検討中」「入会」「辞退」のラベル）
+   ============================================================ */
+/* バッジ共通スタイル */
+.inq-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* 未対応（グレー） */
+.inq-badge-0 {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* 検討中（黄色） */
+.inq-badge-1 {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* 入会（緑） */
+.inq-badge-2 {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* 辞退（赤） */
+.inq-badge-3 {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* ============================================================
+   「開く」ボタン（各行の詳細を開くアウトラインボタン）
+   ============================================================ */
+/* 「開く」ボタン */
+.inq-open-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid #4f8df7;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #4f8df7;
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* 「開く」ボタンにマウスを乗せたとき（青く塗りつぶす） */
+.inq-open-btn:hover {
+  background: #4f8df7;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+
+/* ============================================================
+   問い合わせ詳細・新規登録
+   ============================================================ */
+/* 2カラムのボディ（基本情報 / 問い合わせ・メモ） */
+.inqdetail-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 基本情報 */
+.inqdetail-left {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 24px 28px;
+  min-width: 0;
+}
+
+/* 問い合わせ内容・メモ */
+.inqdetail-right {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 24px 28px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* パネルの見出し（基本情報、問い合わせ内容、メモ） */
+.inqdetail-section-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 18px;
+}
+
+/* 左パネルの各フィールド行 */
+.inqdetail-field {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f3f8;
+  gap: 12px;
+}
+
+.inqdetail-field:last-of-type {
+  border-bottom: none;
+}
+
+/* 左パネルのラベル（保護者者、電話） */
+.inqdetail-label {
+  min-width: 72px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* エラーメッセージ用ラッパー */
+.inqdetail-input-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* 入力欄（テキスト・メール・日付） */
+.inqdetail-input {
+  flex: 1;
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1f2937;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.inqdetail-input:focus {
+  outline: none;
+  border-color: #4f8df7;
+  box-shadow: 0 0 0 3px rgba(79, 141, 247, 0.15);
+}
+
+.inqdetail-input.is-error {
+  border-color: #ef4444;
+}
+
+/* セレクトボックス */
+.inqdetail-select {
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1f2937;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.inqdetail-select:focus {
+  outline: none;
+  border-color: #4f8df7;
+  box-shadow: 0 0 0 3px rgba(79, 141, 247, 0.15);
+}
+
+/* バリデーションエラーテキスト */
+.inqdetail-error {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* 右パネルの各フィールド */
+.inqdetail-right-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 右パネルのラベル（問い合わせ内容、メモ） */
+.inqdetail-right-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* テキストエリア */
+.inqdetail-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1f2937;
+  resize: vertical;
+  box-sizing: border-box;
+  background: #f9fafb;
+}
+
+.inqdetail-textarea:focus {
+  outline: none;
+  border-color: #4f8df7;
+  box-shadow: 0 0 0 3px rgba(79, 141, 247, 0.15);
+  background: #ffffff;
+}
+
+/* 右パネル下部のボタンエリア */
+.inqdetail-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* 「登録する」ボタン */
+.inqdetail-btn-submit {
+  height: 38px;
+  padding: 0 24px;
+  background: #4f8df7;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.inqdetail-btn-submit:hover {
+  opacity: 0.85;
+}
+
+/* 状態と希望コースを横並びにするラッパー */
+.inqdetail-row2 {
+  display: flex;
+  gap: 16px;
+}
+
+.inqdetail-row2 .inqdetail-right-field {
+  flex: 1;
+}
+

@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Read(//c/c/cram-school/docker-env/**)"
+      "Read(//c/c/cram-school/docker-env/**)",
+      "Bash(docker compose *)",
+      "Bash(grep -v \"^$\")",
+      "Read(//c/cram-school/**)"
     ]
   }
 }

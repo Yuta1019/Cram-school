@@ -27,3 +27,8 @@ Route::post('/signup/confirm', 'Auth\RegisterController@confirm')->name('signup.
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// 問い合わせ
+Route::get('/inquiry', 'InquiryController@index')->name('inquiry.index');
+Route::get('/inquiry/create', 'InquiryController@create')->name('inquiry.create');
+Route::post('/inquiry', 'InquiryController@store')->name('inquiry.store');
