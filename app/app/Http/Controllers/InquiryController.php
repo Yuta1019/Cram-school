@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Inquiry;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InquiryController extends Controller
 {
@@ -51,10 +52,10 @@ class InquiryController extends Controller
         $statusLabels = Inquiry::STATUS_LABELS;
         $users        = User::orderBy('name')->get();
 
-        return view('inquiry.create', compact('statusLabels', 'users'));
+        return view('inquiry.Inquiry_newregistration', compact('statusLabels', 'users'));
     }
 
-    // 新規登録処理（バリデーション→保存→一覧へリダイレクト）
+    // 新規登録処理（バリデーション→保存→詳細ページへリダイレクト）
     public function store(Request $request)
     {
         $request->validate([
@@ -62,7 +63,7 @@ class InquiryController extends Controller
             'student_name' => 'required|string|max:100',
         ]);
 
-        Inquiry::create([
+        $inquiry = Inquiry::create([
             'parent_name'              => $request->parent_name,
             'parent_phone'             => $request->parent_phone,
             'parent_email'             => $request->parent_email,
@@ -73,11 +74,17 @@ class InquiryController extends Controller
             'desired_course_name'      => $request->desired_course_name,
             'inquiry_content'          => $request->inquiry_content,
             'status'                   => $request->status ?? 0,
-            'assigned_user_id'         => $request->assigned_user_id ?: null,
+            'assigned_user_id'         => Auth::id(),
             'memo'                     => $request->memo,
             'last_contact_at'          => $request->last_contact_at ?: null,
         ]);
 
-        return redirect()->route('inquiry.index')->with('success', '問い合わせを登録しました。');
+        return redirect()->route('inquiry.show', $inquiry)->with('success', '問い合わせを登録しました。');
+    }
+
+    // 問い合わせ詳細表示
+    public function show(Inquiry $inquiry)
+    {
+        return view('inquiry.Inquiry_details', compact('inquiry'));
     }
 }

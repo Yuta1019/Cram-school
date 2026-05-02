@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    ログインページ（resources/views/auth/login.blade.php）
    ============================================================ */
 /* ログインページ全体の背景・フォント設定 */
@@ -864,4 +864,158 @@ body.main-page-body {
 
 .inqdetail-row2 .inqdetail-right-field {
     flex: 1;
+}
+
+/* ============================================================
+   問い合わせ詳細ページ固有スタイル
+   ============================================================ */
+/* 左パネル上部（編集ボタンを右寄せ） */
+.inqdetail-left-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+/* ④編集ボタン（枠線スタイル） */
+.inqdetail-btn-edit {
+    height: 30px;
+    padding: 0 16px;
+    border: 1px solid #4f8df7;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #4f8df7;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.inqdetail-btn-edit:hover {
+    background: #4f8df7;
+    color: #ffffff;
+}
+
+/* 詳細表示の値テキスト */
+.inqdetail-value {
+    font-size: 13px;
+    color: #1f2937;
+}
+
+/* 右側を縦積みにする外側コンテナ */
+.inqdetail-right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* ステータス表示パネル */
+.inqdetail-status-panel {
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ステータスパネルの各行（ラベル＋値） */
+.inqdetail-status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 問い合わせ内容・メモの本文テキスト */
+.inqdetail-text {
+    font-size: 13px;
+    color: #1f2937;
+    margin: 0;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+/* ⑤体験会予約・⑥AIメール ボタンエリア */
+.inqdetail-bottom-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* ⑤体験会予約へ進むボタン（枠線スタイル） */
+.inqdetail-btn-trial {
+    height: 36px;
+    padding: 0 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #374151;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+}
+.inqdetail-btn-trial:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* ⑥AIメールボタン（枠線スタイル） */
+.inqdetail-btn-ai {
+    height: 36px;
+    padding: 0 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #374151;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+}
+.inqdetail-btn-ai:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* タブ行（基本情報・連絡履歴・所感） */
+.inqdetail-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+/* 各タブボタン（編集ボタンと同スタイル：青枠・透明背景） */
+.inqdetail-tab {
+    height: 30px;
+    padding: 0 16px;
+    border: 1px solid #4f8df7;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 12px;
+    color: #4f8df7;
+    cursor: pointer;
+}
+
+/* アクティブなタブ（青塗りつぶし） */
+.inqdetail-tab--active {
+    background: #4f8df7;
+    color: #ffffff;
+}
+
+/* 非活性タブ（グレーアウト） */
+.inqdetail-tab--disabled {
+    border-color: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+/* ステータスパネルの太字ラベル（入会状況・希望コース・受付担当） */
+.inqdetail-status-label {
+    min-width: 80px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #374151;
+    flex-shrink: 0;
 }

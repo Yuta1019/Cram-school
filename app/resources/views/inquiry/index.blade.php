@@ -34,7 +34,11 @@
         <select name="status" class="inq-toolbar-select">
             <option value="">状態：すべて</option>
             @foreach($statusLabels as $value => $label)
-                <option value="{{ $value }}" {{ request('status') === (string)$value ? 'selected' : '' }}>
+                <option value="{{ $value }}"
+                    @if(request('status') == $value)
+                        selected
+                    @endif
+                >
                     {{ $label }}
                 </option>
             @endforeach
@@ -56,8 +60,9 @@
                             <th>保護者名</th>
                             <th>コース</th>
                             <th>状態</th>
-                            <th>担当</th>
-                            <th>最終対応</th>
+                            <th>受付担当</th>
+                            <th>作成日</th>
+                            <th>更新日</th>
                             <th>詳細</th>
                         </tr>
                     </thead>
@@ -66,22 +71,29 @@
                         <tr>
                             <td>{{ $inq->student_name }}</td>
                             <td>{{ $inq->parent_name }}</td>
-                            <td>{{ $inq->desired_course_name ?? '－' }}</td>
                             <td>
-                                <span class="inq-badge inq-badge-{{ $inq->status }}">
-                                    {{ $inq->status_label }}
-                                </span>
-                            </td>
-                            <td>{{ $inq->assignedUser ? $inq->assignedUser->name : '－' }}</td>
-                            <td>
-                                @if($inq->last_contact_at)
-                                    {{ \Carbon\Carbon::parse($inq->last_contact_at)->format('n/j') }}
+                                @if($inq->desired_course_name)
+                                    {{ $inq->desired_course_name }}
                                 @else
                                     －
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="inq-open-btn">開く</a>
+                                <span class="inq-badge inq-badge-{{ $inq->status }}">
+                                    {{ $inq->status_label }}
+                                </span>
+                            </td>
+                            <td>
+                                @if($inq->assignedUser)
+                                    {{ $inq->assignedUser->name }}
+                                @else
+                                    －
+                                @endif
+                            </td>
+                            <td>{{ $inq->created_at->format('Y/n/j') }}</td>
+                            <td>{{ $inq->updated_at->format('Y/n/j') }}</td>
+                            <td>
+                                <a href="{{ route('inquiry.show', $inq) }}" class="inq-open-btn">開く</a>
                             </td>
                         </tr>
                         @endforeach

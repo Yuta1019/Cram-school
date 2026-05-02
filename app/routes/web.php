@@ -32,3 +32,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/inquiry', 'InquiryController@index')->name('inquiry.index');
 Route::get('/inquiry/create', 'InquiryController@create')->name('inquiry.create');
 Route::post('/inquiry', 'InquiryController@store')->name('inquiry.store');
+Route::get('/inquiry/{inquiry}', 'InquiryController@show')->name('inquiry.show');
