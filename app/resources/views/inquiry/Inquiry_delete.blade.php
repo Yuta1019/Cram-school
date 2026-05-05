@@ -3,33 +3,23 @@
 @section('content')
 <div class="inq-page">
 
-    <!-- タイトル -->
     <div class="inq-header">
-        <h1 class="inq-title">お問い合わせ詳細</h1>
+        <h1 class="inq-title">問い合わせ削除</h1>
     </div>
 
-    <!-- タブ -->
+    <!-- タブ（詳細ページと同じ） -->
     <div class="inqdetail-tabs">
         <button type="button" class="inqdetail-tab inqdetail-tab--active">基本情報</button>
-        @if(auth()->user()->role !== 'instructor')
-            <a href="{{ route('contact.index', $inquiry) }}" class="inqdetail-tab">連絡履歴</a>
-        @else
-            <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>連絡履歴</button>
-        @endif
-        <a href="{{ route('lesson_note.create', $inquiry) }}" class="inqdetail-tab">所感</a>
+        <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>連絡履歴</button>
+        <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>所感</button>
     </div>
 
-    <!-- 2カラムボディ -->
+    <!-- 2カラムボディ（詳細ページと同じ表示） -->
     <div class="inqdetail-body">
 
         <!-- 左：基本情報 -->
         <div class="inqdetail-left">
-            <!-- 編集ボタン（受付・管理者のみ表示） -->
-            <div class="inqdetail-left-header">
-                @if(auth()->user()->role !== 'instructor')
-                    <a href="{{ route('inquiry.edit', $inquiry) }}" class="inqdetail-btn-edit">編集</a>
-                @endif
-            </div>
+            <div class="inqdetail-left-header"></div>
 
             <div class="inqdetail-field">
                 <span class="inqdetail-label">保護者名</span>
@@ -160,10 +150,23 @@
                 </div>
             </div>
 
-            <!-- アクションボタン -->
+            <!-- ボタンエリア -->
             <div class="inqdetail-bottom-actions">
-                <a href="#" class="inqdetail-btn-trial">体験会予約へ進む</a>
-                <a href="#" class="inqdetail-btn-ai">AIメール</a>
+
+                <span class="inqdetail-delete-warning">顧客情報を削除しても良いですか？</span>
+
+                <!-- 削除フォーム -->
+                <form method="POST" action="{{ route('inquiry.destroy', $inquiry) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="inqdetail-btn-delete">削除する</button>
+                </form>
+
+                <!-- 編集画面に戻るボタン -->
+                <form method="GET" action="{{ route('inquiry.edit', $inquiry) }}">
+                    <button type="submit" class="inqdetail-btn-cancel">編集画面に戻る</button>
+                </form>
+
             </div>
 
         </div>

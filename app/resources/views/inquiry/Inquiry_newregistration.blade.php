@@ -10,7 +10,6 @@
     <form method="POST" action="{{ route('inquiry.store') }}">
         @csrf
 
-        <!-- 2カラムボディ -->
         <div class="inqdetail-body">
 
             <!-- 基本情報 -->

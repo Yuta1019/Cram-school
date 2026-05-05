@@ -33,3 +33,17 @@ Route::get('/inquiry', 'InquiryController@index')->name('inquiry.index');
 Route::get('/inquiry/create', 'InquiryController@create')->name('inquiry.create');
 Route::post('/inquiry', 'InquiryController@store')->name('inquiry.store');
 Route::get('/inquiry/{inquiry}', 'InquiryController@show')->name('inquiry.show');
+Route::get('/inquiry/{inquiry}/edit', 'InquiryController@edit')->name('inquiry.edit');
+Route::post('/inquiry/{inquiry}/confirm', 'InquiryController@confirmEdit')->name('inquiry.confirmEdit');
+Route::put('/inquiry/{inquiry}', 'InquiryController@update')->name('inquiry.update');
+Route::get('/inquiry/{inquiry}/delete', 'InquiryController@confirmDelete')->name('inquiry.confirmDelete');
+Route::delete('/inquiry/{inquiry}', 'InquiryController@destroy')->name('inquiry.destroy');
+
+// 連絡履歴
+Route::get('/inquiry/{inquiry}/contacts', 'ContactController@index')->name('contact.index');
+Route::get('/inquiry/{inquiry}/contacts/create', 'ContactController@create')->name('contact.create');
+Route::post('/inquiry/{inquiry}/contacts', 'ContactController@store')->name('contact.store');
+
+// 所感
+Route::get('/inquiry/{inquiry}/lesson-notes/create', 'LessonNoteController@create')->name('lesson_note.create');
+Route::post('/inquiry/{inquiry}/lesson-notes', 'LessonNoteController@store')->name('lesson_note.store');

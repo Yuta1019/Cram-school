@@ -832,6 +832,56 @@ body.main-page-body {
   opacity: 0.85;
 }
 
+/* 「削除する」ボタン（赤背景） */
+.inqdetail-btn-delete {
+  height: 38px;
+  padding: 0 24px;
+  background: #e53e3e;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inqdetail-btn-delete:hover {
+  opacity: 0.85;
+  color: #ffffff;
+}
+
+/* 削除ボタン横の警告テキスト */
+.inqdetail-delete-warning {
+  color: #e53e3e;
+  font-size: 13px;
+  font-weight: bold;
+  align-self: center;
+}
+
+/* 「修正する」ボタン（白背景・青枠） */
+.inqdetail-btn-cancel {
+  height: 38px;
+  padding: 0 24px;
+  background: #ffffff;
+  color: #4f8df7;
+  border: 1px solid #4f8df7;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.inqdetail-btn-cancel:hover {
+  background: #4f8df7;
+  color: #ffffff;
+}
+
 /* 状態と希望コースを横並びにするラッパー */
 .inqdetail-row2 {
   display: flex;
@@ -976,6 +1026,13 @@ body.main-page-body {
   cursor: pointer;
 }
 
+/* <a>タグをタブとして使う場合（下線・色を上書き） */
+a.inqdetail-tab {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
 /* アクティブなタブ（青塗りつぶし） */
 .inqdetail-tab--active {
   background: #4f8df7;
@@ -999,3 +1056,135 @@ body.main-page-body {
   flex-shrink: 0;
 }
 
+
+/* ============================================================
+   連絡履歴登録フォーム
+   ============================================================ */
+/* フォーム全体を囲む白いカード */
+.contact-form-card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 32px 40px;
+  max-width: 600px;
+  margin: 0 auto 24px;
+}
+
+/* 各フィールドの行 */
+.contact-form-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* フィールドラベル */
+.contact-form-label {
+  min-width: 80px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+  padding-top: 8px;
+}
+
+/* input のラッパー（エラー表示のため） */
+.contact-form-input-wrap {
+  flex: 1;
+}
+
+/* テキスト・日付入力 */
+.contact-form-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+/* セレクトボックス */
+.contact-form-select {
+  flex: 1;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #ffffff;
+  width: 100%;
+}
+
+/* テキストエリア */
+.contact-form-textarea {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  width: 100%;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* 登録ボタンエリア（右寄せ） */
+.contact-form-actions {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 所感ページ：保存完了メッセージ */
+.impression-success-msg {
+  max-width: 600px;
+  margin: 0 auto 16px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* 所感ページ：ラベル上・枠下のフィールド */
+.impression-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.impression-form-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* 理解度・集中度の横並びレイアウト */
+.impression-level-row {
+  display: flex;
+  gap: 24px;
+}
+
+.impression-level-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+/* 理解度・集中度のラベル（各セレクトの上に表示） */
+.impression-level-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* 理解度・集中度のセレクト（縦幅を大きくする） */
+.contact-form-select.impression-level-select {
+  height: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
