@@ -38,7 +38,10 @@
                class="main-sidebar-item {{ request()->routeIs('inquiry.*') ? 'active' : '' }}">
                 お問い合わせ
             </a>
-            <a href="#" class="main-sidebar-item">体験会</a>
+            <a href="{{ route('trial.index') }}"
+               class="main-sidebar-item {{ request()->routeIs('trial.*') ? 'active' : '' }}">
+                体験会一覧
+            </a>
             <a href="#" class="main-sidebar-item">AIメール</a>
             <a href="#" class="main-sidebar-item">設定</a>
         </nav>

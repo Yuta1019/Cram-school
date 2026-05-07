@@ -47,3 +47,9 @@ Route::post('/inquiry/{inquiry}/contacts', 'ContactController@store')->name('con
 // 所感
 Route::get('/inquiry/{inquiry}/lesson-notes/create', 'LessonNoteController@create')->name('lesson_note.create');
 Route::post('/inquiry/{inquiry}/lesson-notes', 'LessonNoteController@store')->name('lesson_note.store');
+
+// 体験会
+Route::get('/trial-events', 'TrialEventController@index')->name('trial.index');
+Route::get('/trial-events/create', 'TrialEventController@create')->name('trial.create');
+Route::post('/trial-events', 'TrialEventController@store')->name('trial.store');
+Route::get('/trial-events/{trialEvent}', 'TrialEventController@show')->name('trial.show');

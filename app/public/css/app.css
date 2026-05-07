@@ -1188,3 +1188,292 @@ a.inqdetail-tab {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+/* ============================================================
+   体験会一覧ページ（resources/views/trial/experience.blade.php）
+   ============================================================ */
+
+/* メインカード（タブ＋テーブルを囲む白い枠） */
+.trial-card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* タブエリア（右寄せ） */
+.trial-tabs {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+/* タブボタン共通 */
+.trial-tab {
+  height: 36px;
+  padding: 0 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* アクティブなタブ */
+.trial-tab--active {
+  background: #4f8df7;
+  color: #ffffff;
+  border-color: #4f8df7;
+}
+
+/* 押せないタブ */
+.trial-tab--disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* 体験会テーブル */
+.trial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* テーブルのヘッダー行 */
+.trial-table thead th {
+  padding: 10px 12px;
+  text-align: left;
+  color: #6b7280;
+  font-weight: bold;
+  border-bottom: 2px solid #e3e8ef;
+}
+
+/* テーブルのデータ行 */
+.trial-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  vertical-align: middle;
+}
+
+/* テーブルの行にマウスを乗せたとき */
+.trial-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* 詳細（開く）ボタン */
+.trial-open-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  color: #374151;
+  text-decoration: none;
+}
+
+.trial-open-btn:hover {
+  background: #f3f4f6;
+}
+
+/* 開催日登録ボタンのエリア（右下に配置） */
+.trial-register-area {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 開催日登録ボタン */
+.trial-register-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 24px;
+  background: #4f8df7;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.trial-register-btn:hover {
+  background: #3b7de8;
+}
+
+/* ============================================================
+   体験会新規登録ページ（resources/views/trial/experience_newregistration.blade.php）
+   ============================================================ */
+
+/* メインカード */
+.trial-newreg-card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* カードタイトル */
+.trial-newreg-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #374151;
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+/* 各フィールドの余白 */
+.trial-newreg-field {
+  margin-bottom: 16px;
+}
+
+/* フィールドのタイトルラベル */
+.trial-newreg-label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* テキスト・日付・数値入力欄 */
+.trial-newreg-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+/* 時間入力の横並びレイアウト（開始〜終了） */
+.trial-newreg-time-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 「〜」の区切り文字 */
+.trial-newreg-time-sep {
+  font-size: 14px;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+/* 登録ボタンのエリア（中央寄せ） */
+.trial-newreg-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* ============================================================
+   体験会詳細ページ（resources/views/trial/experience_details.blade.php）
+   ============================================================ */
+
+/* タイトル行（詳細 + 編集ボタンを左右に配置） */
+.trial-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.trial-detail-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* 編集ボタン */
+.trial-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+  text-decoration: none;
+}
+
+.trial-edit-btn:hover {
+  background: #f3f4f6;
+}
+
+/* 2カラムのカードエリア */
+.trial-detail-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 各カード（体験会実施日・参加生徒一覧） */
+.trial-detail-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+/* カード内タイトル */
+.trial-detail-card-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #374151;
+  margin: 0 0 20px;
+}
+
+/* 各フィールド行 */
+.trial-detail-field {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* フィールドラベル */
+.trial-detail-label {
+  min-width: 70px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #6b7280;
+}
+
+/* フィールドの値 */
+.trial-detail-value {
+  font-size: 13px;
+  color: #1f2937;
+}
+
+/* 予約が0件のときのメッセージ */
+.trial-detail-empty {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* 予約の区切り線 */
+.trial-detail-divider {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+  margin: 12px 0;
+}
