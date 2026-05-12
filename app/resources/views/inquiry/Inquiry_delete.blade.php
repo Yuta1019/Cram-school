@@ -7,17 +7,16 @@
         <h1 class="inq-title">問い合わせ削除</h1>
     </div>
 
-    <!-- タブ（詳細ページと同じ） -->
+    <!-- タブ -->
     <div class="inqdetail-tabs">
         <button type="button" class="inqdetail-tab inqdetail-tab--active">基本情報</button>
         <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>連絡履歴</button>
         <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>所感</button>
     </div>
 
-    <!-- 2カラムボディ（詳細ページと同じ表示） -->
     <div class="inqdetail-body">
 
-        <!-- 左：基本情報 -->
+        <!-- 基本情報 -->
         <div class="inqdetail-left">
             <div class="inqdetail-left-header"></div>
 
@@ -83,7 +82,7 @@
             </div>
         </div>
 
-        <!-- 右：問い合わせ内容・メモ＋ステータス -->
+        <!-- 問い合わせ内容・メモ＋ステータス -->
         <div class="inqdetail-right-col">
 
             <!-- 問い合わせ内容・メモパネル -->

@@ -14,7 +14,7 @@
         <!-- 一覧・カレンダー タブ -->
         <div class="trial-tabs">
             <button type="button" class="trial-tab trial-tab--active">一覧</button>
-            <button type="button" class="trial-tab trial-tab--disabled" disabled>カレンダー</button>
+            <a href="{{ route('trial.calendar') }}" class="trial-tab">カレンダー</a>
         </div>
 
         <!-- 体験会テーブル -->

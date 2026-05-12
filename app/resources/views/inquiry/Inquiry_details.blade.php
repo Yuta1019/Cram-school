@@ -19,12 +19,11 @@
         <a href="{{ route('lesson_note.create', $inquiry) }}" class="inqdetail-tab">所感</a>
     </div>
 
-    <!-- 2カラムボディ -->
     <div class="inqdetail-body">
 
-        <!-- 左：基本情報 -->
+        <!-- 基本情報 -->
         <div class="inqdetail-left">
-            <!-- 編集ボタン（受付・管理者のみ表示） -->
+            <!-- 編集ボタン -->
             <div class="inqdetail-left-header">
                 @if(auth()->user()->role !== 'instructor')
                     <a href="{{ route('inquiry.edit', $inquiry) }}" class="inqdetail-btn-edit">編集</a>
@@ -93,7 +92,7 @@
             </div>
         </div>
 
-        <!-- 右：問い合わせ内容・メモ＋ステータス -->
+        <!-- 問い合わせ内容・メモ＋ステータス -->
         <div class="inqdetail-right-col">
 
             <!-- 問い合わせ内容・メモパネル -->
@@ -160,9 +159,11 @@
                 </div>
             </div>
 
-            <!-- アクションボタン -->
+            <!-- アクションボタン（受付・管理者のみ体験会予約ボタンを表示） -->
             <div class="inqdetail-bottom-actions">
-                <a href="#" class="inqdetail-btn-trial">体験会予約へ進む</a>
+                @if(auth()->user()->role !== 'instructor')
+                    <a href="{{ route('trial.reservation.create', $inquiry) }}" class="inqdetail-btn-trial">体験会予約へ進む</a>
+                @endif
                 <a href="#" class="inqdetail-btn-ai">AIメール</a>
             </div>
 

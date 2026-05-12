@@ -48,8 +48,20 @@ Route::post('/inquiry/{inquiry}/contacts', 'ContactController@store')->name('con
 Route::get('/inquiry/{inquiry}/lesson-notes/create', 'LessonNoteController@create')->name('lesson_note.create');
 Route::post('/inquiry/{inquiry}/lesson-notes', 'LessonNoteController@store')->name('lesson_note.store');
 
+// 体験会予約
+Route::get('/inquiry/{inquiry}/trial-reservation', 'TrialReservationController@create')->name('trial.reservation.create');
+Route::post('/inquiry/{inquiry}/trial-reservation/confirm', 'TrialReservationController@confirm')->name('trial.reservation.confirm');
+Route::post('/inquiry/{inquiry}/trial-reservation', 'TrialReservationController@store')->name('trial.reservation.store');
+Route::delete('/trial-reservations/{reservation}', 'TrialReservationController@destroy')->name('trial.reservation.destroy');
+
 // 体験会
 Route::get('/trial-events', 'TrialEventController@index')->name('trial.index');
 Route::get('/trial-events/create', 'TrialEventController@create')->name('trial.create');
+Route::get('/trial-events/calendar', 'TrialEventController@calendar')->name('trial.calendar');
 Route::post('/trial-events', 'TrialEventController@store')->name('trial.store');
 Route::get('/trial-events/{trialEvent}', 'TrialEventController@show')->name('trial.show');
+Route::get('/trial-events/{trialEvent}/edit', 'TrialEventController@edit')->name('trial.edit');
+Route::post('/trial-events/{trialEvent}/confirm', 'TrialEventController@confirmEdit')->name('trial.confirmEdit');
+Route::put('/trial-events/{trialEvent}', 'TrialEventController@update')->name('trial.update');
+Route::get('/trial-events/{trialEvent}/delete', 'TrialEventController@confirmDelete')->name('trial.confirmDelete');
+Route::delete('/trial-events/{trialEvent}', 'TrialEventController@destroy')->name('trial.destroy');

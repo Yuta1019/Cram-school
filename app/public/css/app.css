@@ -816,6 +816,9 @@ body.main-page-body {
 
 /* 「登録する」ボタン */
 .inqdetail-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 38px;
   padding: 0 24px;
   background: #4f8df7;
@@ -824,6 +827,7 @@ body.main-page-body {
   border-radius: 6px;
   font-size: 13px;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -1210,8 +1214,11 @@ a.inqdetail-tab {
   margin-bottom: 20px;
 }
 
-/* タブボタン共通 */
+/* タブボタン共通（button タグと a タグどちらでも使える） */
 .trial-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 36px;
   padding: 0 20px;
   border: 1px solid #d1d5db;
@@ -1220,6 +1227,7 @@ a.inqdetail-tab {
   font-size: 13px;
   font-weight: bold;
   color: #374151;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -1381,6 +1389,34 @@ a.inqdetail-tab {
   margin-top: 28px;
 }
 
+/* 体験会確認ページ：各フィールドの行 */
+.trial-conf-field {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+/* 確認ページのラベル */
+.trial-conf-label {
+  min-width: 90px;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* 確認ページの値 */
+.trial-conf-value {
+  color: #1f2937;
+}
+
+/* 体験会編集ページ：削除（左端）・内容確認（右端）を両端に配置 */
+.trial-edit-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
 /* ============================================================
    体験会詳細ページ（resources/views/trial/experience_details.blade.php）
    ============================================================ */
@@ -1476,4 +1512,411 @@ a.inqdetail-tab {
   border: none;
   border-top: 1px solid #f3f4f6;
   margin: 12px 0;
+}
+
+/* ============================================================
+   体験会削除確認ページ（resources/views/trial/experience_delete.blade.php）
+   ============================================================ */
+
+/* ボタンエリア（警告テキスト：左端　ボタン類：右端） */
+.trial-delete-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+
+/* 赤い警告テキスト */
+.trial-delete-warning {
+  font-size: 13px;
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* ボタン類をまとめるエリア */
+.trial-delete-btns {
+  display: flex;
+  gap: 12px;
+}
+
+/* 編集画面に戻るボタン */
+.inqdetail-btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  color: #374151;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.inqdetail-btn-back:hover {
+  background: #f3f4f6;
+}
+
+/* ============================================================
+   体験会カレンダーページ（resources/views/trial/experience_calendar.blade.php）
+   ============================================================ */
+
+/* カレンダー（左）+ 詳細（右）の2カラムレイアウト */
+.trial-cal-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* 左：カレンダーエリア */
+.trial-cal-left {
+  flex: 2;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* 月ナビゲーション（＜ 年月 ＞） */
+.trial-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+/* 前月・次月ボタン */
+.trial-cal-nav-btn {
+  display: inline-block;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 4px 14px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #374151;
+  cursor: pointer;
+}
+
+.trial-cal-nav-btn:hover {
+  background: #f3f4f6;
+}
+
+/* 年月ラベル */
+.trial-cal-month {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1f2937;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* カレンダーグリッド（7列） */
+.trial-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+/* 曜日ヘッダー */
+.trial-cal-day-header {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #6b7280;
+  padding: 6px 0;
+}
+
+/* カレンダーテーブル */
+.trial-cal-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* 曜日ヘッダー（th） */
+.trial-cal-table thead th {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #6b7280;
+  padding: 6px 0;
+}
+
+/* 日付セル */
+.trial-cal-cell {
+  position: relative;
+  text-align: center;
+  padding: 8px 4px 14px;
+  font-size: 13px;
+  color: #1f2937;
+  border-radius: 6px;
+  cursor: pointer;
+  min-height: 42px;
+}
+
+.trial-cal-cell:hover {
+  background: #f3f4f6;
+}
+
+/* 空白セル（月初の前の空き） */
+.trial-cal-cell--blank {
+  cursor: default;
+}
+
+.trial-cal-cell--blank:hover {
+  background: transparent;
+}
+
+/* 今日の日付 */
+.trial-cal-cell--today {
+  background: #eff6ff;
+  font-weight: bold;
+}
+
+/* 選択中の日付 */
+.trial-cal-cell--selected {
+  background: #13294b !important;
+  color: #ffffff !important;
+}
+
+/* 体験会がある日はテキストを太字にする */
+.trial-cal-cell--has-event {
+  font-weight: bold;
+}
+
+/* 体験会があることを示す青いドット */
+.trial-cal-dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+}
+
+/* 選択中のセルのドットは白にする */
+.trial-cal-cell--selected .trial-cal-dot {
+  background: #ffffff;
+}
+
+/* 日曜日は赤 */
+.trial-cal-sun {
+  color: #dc2626;
+}
+
+/* 土曜日は青 */
+.trial-cal-sat {
+  color: #2563eb;
+}
+
+/* 右：詳細エリア */
+.trial-cal-right {
+  flex: 1;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 詳細コンテンツ */
+.trial-cal-detail {
+  flex: 1;
+}
+
+/* 選択した日付の見出し */
+.trial-cal-detail-date {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 12px;
+}
+
+/* イベントがないときのメッセージ */
+.trial-cal-detail-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* 体験会1件分の枠 */
+.trial-cal-event-row {
+  border: 1px solid #e3e8ef;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+/* 各フィールド行（ラベル + 値） */
+.trial-cal-event-field {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.trial-cal-event-field:last-child {
+  margin-bottom: 0;
+}
+
+/* フィールドラベル */
+.trial-cal-event-label {
+  min-width: 40px;
+  font-weight: bold;
+  color: #6b7280;
+}
+
+/* 詳細を開くボタンのフッター（右寄せ） */
+.trial-cal-detail-footer {
+  margin-top: 12px;
+  text-align: right;
+}
+
+/* ============================================================
+   体験会予約ページ（resources/views/trial/experience_reservation.blade.php）
+   ============================================================ */
+
+/* 顧客情報（左）+ 日付選択（右）の2カラムレイアウト */
+.trial-rsv-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 左：顧客情報カード */
+.trial-rsv-customer {
+  flex: 1;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+/* 右：日付選択カード */
+.trial-rsv-dates {
+  flex: 1;
+  border: 1px solid #e3e8ef;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+/* カード内タイトル */
+.trial-rsv-card-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 16px;
+}
+
+/* フィールド行（ラベル + 値） */
+.trial-rsv-field {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* フィールドラベル */
+.trial-rsv-label {
+  min-width: 70px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #6b7280;
+}
+
+/* フィールドの値 */
+.trial-rsv-value {
+  font-size: 13px;
+  color: #1f2937;
+}
+
+/* 列ヘッダー行（開催日・時間・コース・定員） */
+.trial-rsv-date-header {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr 1fr;
+  padding: 0 16px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #6b7280;
+}
+
+/* 日時ボタン（4列グリッドで均等表示） */
+.trial-rsv-date-btn {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr 1fr;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.trial-rsv-date-btn:hover {
+  background: #eff6ff;
+  border-color: #4f8df7;
+  color: #2563eb;
+}
+
+/* 体験会がないときのメッセージ */
+.trial-rsv-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ============================================================
+   体験会詳細ページ　参加生徒一覧：予約取り消し関連
+   ============================================================ */
+
+/* 予約取り消し後のフラッシュメッセージ */
+.trial-detail-flash {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #166534;
+  margin-bottom: 16px;
+}
+
+/* 生徒情報（左）+ ボタン（右）を横並びにするコンテナ */
+.trial-detail-reservation {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* 生徒情報エリア（フレックスで残りの幅を使う） */
+.trial-detail-reservation-info {
+  flex: 1;
+}
+
+/* 予約取り消しボタン */
+.trial-rsv-cancel-btn {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  color: #dc2626;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.trial-rsv-cancel-btn:hover {
+  background: #fef2f2;
 }

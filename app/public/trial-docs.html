@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>体験会機能　コード解説</title>
+<style>
+  /* ========== 全体 ========== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    font-size: 13px;
+    color: #1f2937;
+    background: #fff;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ========== 表紙 ========== */
+  .cover {
+    text-align: center;
+    padding: 80px 0 60px;
+    border-bottom: 3px solid #13294b;
+    margin-bottom: 40px;
+  }
+  .cover h1 { font-size: 28px; color: #13294b; margin-bottom: 12px; }
+  .cover p  { font-size: 14px; color: #6b7280; }
+
+  /* ========== 目次 ========== */
+  .toc { margin-bottom: 48px; }
+  .toc h2 { font-size: 16px; color: #13294b; border-left: 4px solid #13294b; padding-left: 10px; margin-bottom: 12px; }
+  .toc ol { padding-left: 24px; line-height: 2; }
+  .toc li { font-size: 13px; }
+
+  /* ========== セクション ========== */
+  .section { margin-bottom: 56px; }
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: #13294b;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  .section-title span {
+    font-size: 11px;
+    font-weight: normal;
+    opacity: 0.8;
+    margin-left: 10px;
+  }
+
+  /* ========== 概念ボックス ========== */
+  .concept {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .concept strong { color: #1d4ed8; }
+
+  /* ========== ファイルカード ========== */
+  .file-card {
+    border: 1px solid #e3e8ef;
+    border-radius: 8px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .file-header {
+    background: #f8fafc;
+    border-bottom: 1px solid #e3e8ef;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .file-path {
+    font-family: monospace;
+    font-size: 12px;
+    color: #374151;
+    background: #e5e7eb;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .file-role {
+    font-size: 11px;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  .role-all      { background: #16a34a; }
+  .role-reception { background: #2563eb; }
+  .role-admin    { background: #dc2626; }
+
+  .file-body { padding: 16px; }
+  .file-desc {
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
+
+  /* ========== コードブロック ========== */
+  .code-block {
+    background: #1e293b;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    counter-reset: line;
+  }
+  .code-block pre {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: #e2e8f0;
+    white-space: pre;
+  }
+  /* コメント */
+  .c  { color: #94a3b8; }
+  /* キーワード（class, function, return, if など） */
+  .k  { color: #93c5fd; }
+  /* 文字列 */
+  .s  { color: #86efac; }
+  /* 変数 */
+  .v  { color: #fde68a; }
+  /* メソッド名 */
+  .m  { color: #f9a8d4; }
+  /* アノテーション */
+  .a  { color: #fb923c; }
+
+  /* ========== 注釈ラベル ========== */
+  .annotation {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #fefce8;
+    border: 1px solid #fde047;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .annotation .num {
+    background: #eab308;
+    color: #fff;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    white-space: nowrap;
+    margin-top: 1px;
+  }
+
+  /* ========== フロー図 ========== */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .flow-box {
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #1e40af;
+  }
+  .flow-arrow { color: #6b7280; font-size: 16px; }
+
+  /* ========== テーブル ========== */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+  th { background: #13294b; color: #fff; padding: 8px 12px; text-align: left; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e3e8ef; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ========== 印刷設定 ========== */
+  @media print {
+    body { padding: 20px; }
+    .file-card { page-break-inside: avoid; }
+    .section-title { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== 表紙 ========== -->
+<div class="cover">
+  <h1>体験会機能　コード解説</h1>
+  <p>プログラミング塾管理システム ／ Laravel 6.x</p>
+  <p style="margin-top:8px; color:#9ca3af;">初心者向け・全ファイル解説ドキュメント</p>
+</div>
+
+<!-- ========== 目次 ========== -->
+<div class="toc section">
+  <h2>目次</h2>
+  <ol>
+    <li>体験会機能の全体像（MVC の流れ）</li>
+    <li>データベーステーブル</li>
+    <li>モデル（Model）― TrialEvent / TrialReservation</li>
+    <li>コントローラー（Controller）― TrialEventController</li>
+    <li>コントローラー（Controller）― TrialReservationController</li>
+    <li>ルート（Routes）― web.php</li>
+    <li>ビュー（View）― 体験会一覧・カレンダー</li>
+    <li>ビュー（View）― 新規登録・編集・確認・削除</li>
+    <li>ビュー（View）― 予約・予約確認・詳細</li>
+  </ol>
+</div>
+
+<!-- ========== 1. 全体像 ========== -->
+<div class="section">
+  <div class="section-title">1. 体験会機能の全体像（MVCの流れ）</div>
+
+  <div class="concept">
+    <strong>MVC とは？</strong><br>
+    Laravel は「Model（モデル）」「View（ビュー）」「Controller（コントローラー）」の3つに役割を分けて作る仕組みです。<br>
+    ① ブラウザから URL にアクセスする → ② ルートがコントローラーに振り分ける → ③ コントローラーがモデルでデータを取得 → ④ ビューでHTMLを組み立てて返す
+  </div>
+
+  <div class="flow">
+    <div class="flow-box">ブラウザ</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">ルート (web.php)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">コントローラー</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">モデル（DB取得）</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">ビュー（HTML生成）</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">ブラウザに表示</div>
+  </div>
+
+  <table>
+    <tr><th>ファイル種別</th><th>場所</th><th>役割</th></tr>
+    <tr><td>ルート</td><td>routes/web.php</td><td>URLとコントローラーを結びつける</td></tr>
+    <tr><td>コントローラー</td><td>app/Http/Controllers/</td><td>処理の司令塔。データの取得・保存・バリデーション</td></tr>
+    <tr><td>モデル</td><td>app/</td><td>データベースのテーブルと対応。データの読み書き</td></tr>
+    <tr><td>ビュー</td><td>resources/views/trial/</td><td>画面のHTML。PHP変数を埋め込んで表示</td></tr>
+  </table>
+
+  <p style="margin-top:12px; font-size:13px; line-height:2; color:#374151;">
+    体験会機能のページ一覧：
+  </p>
+  <table style="margin-top:8px;">
+    <tr><th>ページ名</th><th>URL</th><th>表示できるロール</th></tr>
+    <tr><td>体験会一覧</td><td>/trial-events</td><td>全員</td></tr>
+    <tr><td>カレンダー</td><td>/trial-events/calendar</td><td>全員</td></tr>
+    <tr><td>詳細</td><td>/trial-events/{id}</td><td>全員</td></tr>
+    <tr><td>新規登録</td><td>/trial-events/create</td><td>受付・管理者</td></tr>
+    <tr><td>編集</td><td>/trial-events/{id}/edit</td><td>受付・管理者</td></tr>
+    <tr><td>編集確認</td><td>/trial-events/{id}/confirm (POST)</td><td>受付・管理者</td></tr>
+    <tr><td>削除確認</td><td>/trial-events/{id}/delete</td><td>管理者のみ</td></tr>
+    <tr><td>予約</td><td>/inquiry/{id}/trial-reservation</td><td>受付・管理者</td></tr>
+    <tr><td>予約確認</td><td>/inquiry/{id}/trial-reservation/confirm (POST)</td><td>受付・管理者</td></tr>
+  </table>
+</div>
+
+<!-- ========== 2. DB テーブル ========== -->
+<div class="section">
+  <div class="section-title">2. データベーステーブル</div>
+
+  <div class="concept">
+    <strong>テーブルとは？</strong><br>
+    データを保存する Excelのような表のことです。行が1件のデータ、列がデータの項目（カラム）です。
+  </div>
+
+  <p style="font-size:13px; font-weight:bold; color:#374151; margin-bottom:8px;">■ trial_events（体験会テーブル）</p>
+  <table>
+    <tr><th>カラム名</th><th>型</th><th>説明</th></tr>
+    <tr><td>id</td><td>bigIncrements</td><td>自動で採番される体験会のID（主キー）</td></tr>
+    <tr><td>event_date</td><td>date</td><td>開催日</td></tr>
+    <tr><td>start_time</td><td>string</td><td>開始時間（例: 10:00）</td></tr>
+    <tr><td>end_time</td><td>string</td><td>終了時間（例: 12:00）</td></tr>
+    <tr><td>course_name</td><td>string</td><td>コース名（A / B / C）</td></tr>
+    <tr><td>capacity</td><td>integer</td><td>定員数</td></tr>
+    <tr><td>reserved_count</td><td>integer</td><td>現在の予約人数</td></tr>
+    <tr><td>status</td><td>integer</td><td>0 = 空きあり、1 = 満員</td></tr>
+    <tr><td>created_by</td><td>bigInteger</td><td>登録した担当者のユーザーID</td></tr>
+    <tr><td>created_at / updated_at</td><td>timestamp</td><td>作成日時・更新日時（Laravel が自動で入れる）</td></tr>
+  </table>
+
+  <p style="font-size:13px; font-weight:bold; color:#374151; margin: 20px 0 8px;">■ trial_reservations（体験会予約テーブル）</p>
+  <table>
+    <tr><th>カラム名</th><th>型</th><th>説明</th></tr>
+    <tr><td>id</td><td>bigIncrements</td><td>予約ID（主キー）</td></tr>
+    <tr><td>inquiry_id</td><td>bigInteger（外部キー）</td><td>どの問い合わせからの予約か</td></tr>
+    <tr><td>trial_event_id</td><td>bigInteger（外部キー）</td><td>どの体験会への予約か</td></tr>
+    <tr><td>reservation_status</td><td>string</td><td>予約状態（例: 予約済み）</td></tr>
+    <tr><td>reserved_at</td><td>datetime</td><td>予約した日時</td></tr>
+    <tr><td>checked_in_at</td><td>datetime（nullable）</td><td>受付した日時（来たら記録）</td></tr>
+    <tr><td>attendance_status</td><td>string（nullable）</td><td>出席状態</td></tr>
+    <tr><td>note</td><td>text（nullable）</td><td>備考</td></tr>
+    <tr><td>created_by</td><td>bigInteger（nullable）</td><td>登録した担当者ID</td></tr>
+  </table>
+
+  <div class="concept" style="margin-top:16px;">
+    <strong>外部キー（Foreign Key）とは？</strong><br>
+    別のテーブルのIDを参照する仕組みです。<code>inquiry_id</code> は inquiries テーブルの id を指し、<code>trial_event_id</code> は trial_events テーブルの id を指します。これにより「この予約は○○の問い合わせのもの」「この体験会への予約」という関係が表現できます。
+  </div>
+</div>
+
+<!-- ========== 3. モデル ========== -->
+<div class="section">
+  <div class="section-title">3. モデル（Model）</div>
+
+  <div class="concept">
+    <strong>モデルとは？</strong><br>
+    データベースのテーブル1つに対して1つのモデルクラスを作ります。<br>
+    モデルを使うと、SQLを直接書かなくても <code>TrialEvent::all()</code> のようにPHPのコードでデータを取得・保存できます。
+  </div>
+
+  <!-- TrialEvent -->
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">app/TrialEvent.php</span>
+      <span class="file-role role-all">全ロール共通</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会（trial_events テーブル）を操作するモデルです。</p>
+
+      <div class="code-block"><pre>
+<span class="k">class</span> <span class="m">TrialEvent</span> <span class="k">extends</span> Model
+{
+    <span class="c">// ① 保存を許可するカラムの一覧（セキュリティのための設定）</span>
+    <span class="k">protected</span> <span class="v">$fillable</span> = [
+        <span class="s">'event_date'</span>, <span class="s">'start_time'</span>, <span class="s">'end_time'</span>,
+        <span class="s">'course_name'</span>, <span class="s">'capacity'</span>, <span class="s">'reserved_count'</span>,
+        <span class="s">'status'</span>, <span class="s">'created_by'</span>,
+    ];
+
+    <span class="c">// ② 状態の表示ラベル（0 → '空きあり'、1 → '満員'）</span>
+    <span class="k">const</span> STATUS_LABELS = [
+        0 => <span class="s">'空きあり'</span>,
+        1 => <span class="s">'満員'</span>,
+    ];
+
+    <span class="c">// ③ event_date を日付オブジェクトとして扱う → format() が使えるようになる</span>
+    <span class="k">protected</span> <span class="v">$dates</span> = [<span class="s">'event_date'</span>];
+
+    <span class="c">// ④ この体験会に紐づく予約一覧を取得するリレーション（1対多）</span>
+    <span class="k">public function</span> <span class="m">reservations</span>()
+    {
+        <span class="k">return</span> <span class="v">$this</span>-><span class="m">hasMany</span>(TrialReservation::class);
+    }
+}</pre></div>
+
+      <div class="annotation">
+        <span class="num">①</span>
+        <span><strong>$fillable</strong> ― ここに書いたカラムだけ <code>create()</code> や <code>fill()</code> で値をセットできます。書いていないカラムには外部から値を入れられないので、セキュリティ対策になります。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">③</span>
+        <span><strong>$dates</strong> ― 指定したカラムを Carbon（日付専用クラス）として扱います。これで <code>$event->event_date->format('Y/n/j')</code> のように日付フォーマットが使えます。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">④</span>
+        <span><strong>hasMany（1対多）</strong> ― 体験会1件に対して予約が複数ある関係を表します。<code>$trialEvent->reservations</code> で紐づく予約一覧を取得できます。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TrialReservation -->
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">app/TrialReservation.php</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会予約（trial_reservations テーブル）を操作するモデルです。</p>
+
+      <div class="code-block"><pre>
+<span class="c">// ① この予約が属する問い合わせ（多対1）</span>
+<span class="k">public function</span> <span class="m">inquiry</span>()
+{
+    <span class="k">return</span> <span class="v">$this</span>-><span class="m">belongsTo</span>(Inquiry::class);
+}
+
+<span class="c">// ② この予約が属する体験会（多対1）</span>
+<span class="k">public function</span> <span class="m">trialEvent</span>()
+{
+    <span class="k">return</span> <span class="v">$this</span>-><span class="m">belongsTo</span>(TrialEvent::class);
+}</pre></div>
+
+      <div class="annotation">
+        <span class="num">①②</span>
+        <span><strong>belongsTo（多対1）</strong> ― 予約は1件の問い合わせに、1件の体験会に属します。<code>$reservation->inquiry->student_name</code> のように関連データを簡単に取り出せます。</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4. TrialEventController ========== -->
+<div class="section">
+  <div class="section-title">4. コントローラー ― TrialEventController<span>app/Http/Controllers/TrialEventController.php</span></div>
+
+  <div class="concept">
+    <strong>コントローラーとは？</strong><br>
+    ページごとの処理（データ取得・保存・バリデーション）をまとめた司令塔です。1つのページ = 1つのメソッドが基本です。
+  </div>
+
+  <div class="file-card">
+    <div class="file-header"><span class="file-path">アクセス制限の仕組み</span></div>
+    <div class="file-body">
+      <div class="code-block"><pre>
+<span class="c">// ① すべてのメソッドでログインを必須にする</span>
+<span class="k">public function</span> <span class="m">__construct</span>()
+{
+    <span class="v">$this</span>-><span class="m">middleware</span>(<span class="s">'auth'</span>);
+}
+
+<span class="c">// ② 講師はアクセス不可（受付・管理者だけOK）</span>
+<span class="k">private function</span> <span class="m">checkRole</span>()
+{
+    <span class="k">if</span> (auth()-><span class="m">user</span>()-><span class="m">role</span> === <span class="s">'instructor'</span>) {
+        <span class="m">abort</span>(403);
+    }
+}
+
+<span class="c">// ③ 管理者だけアクセス可能</span>
+<span class="k">private function</span> <span class="m">checkAdmin</span>()
+{
+    <span class="k">if</span> (auth()-><span class="m">user</span>()-><span class="m">role</span> !== <span class="s">'admin'</span>) {
+        <span class="m">abort</span>(403);
+    }
+}</pre></div>
+      <div class="annotation">
+        <span class="num">①</span>
+        <span><strong>middleware('auth')</strong> ― ログインしていない人はこのコントローラーのどのページも開けません。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">②③</span>
+        <span>各メソッドの先頭で <code>$this->checkRole()</code> または <code>$this->checkAdmin()</code> を呼ぶことで、ロールに応じたアクセス制限をかけます。</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header"><span class="file-path">主要メソッド一覧</span></div>
+    <div class="file-body">
+      <table>
+        <tr><th>メソッド</th><th>HTTPメソッド</th><th>処理内容</th><th>アクセス</th></tr>
+        <tr><td>index()</td><td>GET</td><td>体験会一覧を取得してビューに渡す</td><td>全員</td></tr>
+        <tr><td>calendar()</td><td>GET</td><td>全体験会をJS用配列に変換してカレンダービューに渡す</td><td>全員</td></tr>
+        <tr><td>show()</td><td>GET</td><td>1件の体験会と予約一覧を取得して詳細ビューに渡す</td><td>全員</td></tr>
+        <tr><td>create()</td><td>GET</td><td>新規登録フォームを表示する</td><td>受付・管理者</td></tr>
+        <tr><td>store()</td><td>POST</td><td>バリデーション後にDBへ保存し一覧へリダイレクト</td><td>受付・管理者</td></tr>
+        <tr><td>edit()</td><td>GET</td><td>編集フォームを表示する</td><td>受付・管理者</td></tr>
+        <tr><td>confirmEdit()</td><td>POST</td><td>入力内容を確認ページに渡す（保存はしない）</td><td>受付・管理者</td></tr>
+        <tr><td>update()</td><td>PUT</td><td>バリデーション後にDBを更新し一覧へリダイレクト</td><td>受付・管理者</td></tr>
+        <tr><td>confirmDelete()</td><td>GET</td><td>削除確認ページを表示する</td><td>管理者のみ</td></tr>
+        <tr><td>destroy()</td><td>DELETE</td><td>DBから削除し一覧へリダイレクト</td><td>管理者のみ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header"><span class="file-path">store() ― 新規登録処理のポイント</span></div>
+    <div class="file-body">
+      <div class="code-block"><pre>
+<span class="k">public function</span> <span class="m">store</span>(Request <span class="v">$request</span>)
+{
+    <span class="v">$this</span>-><span class="m">checkRole</span>(); <span class="c">// ① 講師はここで止まる</span>
+
+    <span class="c">// ② バリデーション（入力チェック）</span>
+    <span class="v">$request</span>-><span class="m">validate</span>([
+        <span class="s">'event_date'</span>  => <span class="s">'required|date'</span>,    <span class="c">// 必須・日付形式</span>
+        <span class="s">'start_time'</span>  => <span class="s">'required'</span>,         <span class="c">// 必須</span>
+        <span class="s">'course_name'</span> => <span class="s">'required|string|max:100'</span>,
+        <span class="s">'capacity'</span>    => <span class="s">'required|integer|min:0'</span>, <span class="c">// 0以上の整数</span>
+    ]);
+
+    <span class="c">// ③ DBに保存する</span>
+    <span class="m">TrialEvent</span>::<span class="m">create</span>([
+        <span class="s">'event_date'</span>  => <span class="v">$request</span>->event_date,
+        <span class="s">'created_by'</span>  => <span class="m">auth</span>()-><span class="m">id</span>(), <span class="c">// ログイン中のユーザーID</span>
+    ]);
+
+    <span class="c">// ④ 一覧ページにリダイレクト（フラッシュメッセージ付き）</span>
+    <span class="k">return</span> <span class="m">redirect</span>()-><span class="m">route</span>(<span class="s">'trial.index'</span>)
+        -><span class="m">with</span>(<span class="s">'success'</span>, <span class="s">'体験会を登録しました。'</span>);
+}</pre></div>
+      <div class="annotation">
+        <span class="num">②</span>
+        <span><strong>validate()</strong> ― フォームの入力値をチェックします。エラーがあれば自動で前のページに戻り、エラーメッセージが表示されます。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">③</span>
+        <span><strong>TrialEvent::create()</strong> ― $fillable に書いたカラムに一括で値をセットしてDBに保存します。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">④</span>
+        <span><strong>redirect()->route()->with()</strong> ― 指定したルートにリダイレクトし、セッションにフラッシュメッセージを乗せます。ビュー側で <code>session('success')</code> で受け取れます。</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5. TrialReservationController ========== -->
+<div class="section">
+  <div class="section-title">5. コントローラー ― TrialReservationController<span>app/Http/Controllers/TrialReservationController.php</span></div>
+
+  <div class="file-card">
+    <div class="file-header"><span class="file-path">予約フロー（3ステップ）</span></div>
+    <div class="file-body">
+      <div class="flow">
+        <div class="flow-box">① create()<br><small>予約ページ表示</small></div>
+        <div class="flow-arrow">→ 日付選択 →</div>
+        <div class="flow-box">② confirm()<br><small>確認ページ表示</small></div>
+        <div class="flow-arrow">→ 予約確定 →</div>
+        <div class="flow-box">③ store()<br><small>DB保存・一覧へ</small></div>
+      </div>
+
+      <div class="code-block"><pre>
+<span class="c">// ② 確認ページ表示（DBには保存しない）</span>
+<span class="k">public function</span> <span class="m">confirm</span>(Request <span class="v">$request</span>, Inquiry <span class="v">$inquiry</span>)
+{
+    <span class="v">$this</span>-><span class="m">checkRole</span>();
+    <span class="v">$request</span>-><span class="m">validate</span>([
+        <span class="s">'trial_event_id'</span> => <span class="s">'required|exists:trial_events,id'</span>,
+        <span class="c">// exists: DBに実際に存在するIDかチェックする</span>
+    ]);
+
+    <span class="v">$trialEvent</span> = <span class="m">TrialEvent</span>::<span class="m">findOrFail</span>(<span class="v">$request</span>->trial_event_id);
+    <span class="k">return</span> <span class="m">view</span>(<span class="s">'trial.experience_reservation_conf'</span>,
+        <span class="m">compact</span>(<span class="s">'inquiry'</span>, <span class="s">'trialEvent'</span>));
+}
+
+<span class="c">// ③ 予約をDBに保存する</span>
+<span class="k">public function</span> <span class="m">store</span>(Request <span class="v">$request</span>, Inquiry <span class="v">$inquiry</span>)
+{
+    <span class="m">TrialReservation</span>::<span class="m">create</span>([
+        <span class="s">'inquiry_id'</span>         => <span class="v">$inquiry</span>->id,
+        <span class="s">'trial_event_id'</span>     => <span class="v">$request</span>->trial_event_id,
+        <span class="s">'reservation_status'</span> => <span class="s">'予約済み'</span>,
+        <span class="s">'reserved_at'</span>        => <span class="m">now</span>(), <span class="c">// 現在日時</span>
+        <span class="s">'created_by'</span>         => <span class="m">auth</span>()-><span class="m">id</span>(),
+    ]);
+    <span class="k">return</span> <span class="m">redirect</span>()-><span class="m">route</span>(<span class="s">'trial.index'</span>)
+        -><span class="m">with</span>(<span class="s">'success'</span>, <span class="s">'体験会を予約しました。'</span>);
+}
+
+<span class="c">// 予約取り消し（管理者のみ）</span>
+<span class="k">public function</span> <span class="m">destroy</span>(TrialReservation <span class="v">$reservation</span>)
+{
+    <span class="v">$this</span>-><span class="m">checkAdmin</span>();
+    <span class="v">$trialEventId</span> = <span class="v">$reservation</span>->trial_event_id; <span class="c">// 戻り先のIDを先に控えておく</span>
+    <span class="v">$reservation</span>-><span class="m">delete</span>();
+    <span class="k">return</span> <span class="m">redirect</span>()-><span class="m">route</span>(<span class="s">'trial.show'</span>, <span class="v">$trialEventId</span>)
+        -><span class="m">with</span>(<span class="s">'success'</span>, <span class="s">'予約を取り消しました。'</span>);
+}</pre></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 6. ルート ========== -->
+<div class="section">
+  <div class="section-title">6. ルート（Routes） ― web.php</div>
+
+  <div class="concept">
+    <strong>ルートとは？</strong><br>
+    「このURLにアクセスしたらこのコントローラーのこのメソッドを呼ぶ」という対応表です。<br>
+    <code>Route::get('/url', 'Controller@method')->name('名前')</code> という形で書きます。
+  </div>
+
+  <div class="file-card">
+    <div class="file-header"><span class="file-path">routes/web.php ― 体験会関連ルート</span></div>
+    <div class="file-body">
+      <div class="code-block"><pre>
+<span class="c">// 体験会予約（inquiry に紐づく）</span>
+<span class="m">Route</span>::<span class="m">get</span> (<span class="s">'/inquiry/{inquiry}/trial-reservation'</span>,         <span class="s">'...@create'</span> )-><span class="m">name</span>(<span class="s">'trial.reservation.create'</span>);
+<span class="m">Route</span>::<span class="m">post</span>(<span class="s">'/inquiry/{inquiry}/trial-reservation/confirm'</span>,  <span class="s">'...@confirm'</span>)-><span class="m">name</span>(<span class="s">'trial.reservation.confirm'</span>);
+<span class="m">Route</span>::<span class="m">post</span>(<span class="s">'/inquiry/{inquiry}/trial-reservation'</span>,          <span class="s">'...@store'</span>  )-><span class="m">name</span>(<span class="s">'trial.reservation.store'</span>);
+<span class="m">Route</span>::<span class="m">delete</span>(<span class="s">'/trial-reservations/{reservation}'</span>,           <span class="s">'...@destroy'</span>)-><span class="m">name</span>(<span class="s">'trial.reservation.destroy'</span>);
+
+<span class="c">// 体験会（静的ルートを {trialEvent} より先に書く ← 重要！）</span>
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events'</span>,                     <span class="s">'...@index'</span>        )-><span class="m">name</span>(<span class="s">'trial.index'</span>);
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events/create'</span>,              <span class="s">'...@create'</span>       )-><span class="m">name</span>(<span class="s">'trial.create'</span>);
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events/calendar'</span>,            <span class="s">'...@calendar'</span>     )-><span class="m">name</span>(<span class="s">'trial.calendar'</span>);
+<span class="m">Route</span>::<span class="m">post</span>  (<span class="s">'/trial-events'</span>,                     <span class="s">'...@store'</span>        )-><span class="m">name</span>(<span class="s">'trial.store'</span>);
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events/{trialEvent}'</span>,         <span class="s">'...@show'</span>         )-><span class="m">name</span>(<span class="s">'trial.show'</span>);
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events/{trialEvent}/edit'</span>,    <span class="s">'...@edit'</span>         )-><span class="m">name</span>(<span class="s">'trial.edit'</span>);
+<span class="m">Route</span>::<span class="m">post</span>  (<span class="s">'/trial-events/{trialEvent}/confirm'</span>, <span class="s">'...@confirmEdit'</span>  )-><span class="m">name</span>(<span class="s">'trial.confirmEdit'</span>);
+<span class="m">Route</span>::<span class="m">put</span>   (<span class="s">'/trial-events/{trialEvent}'</span>,         <span class="s">'...@update'</span>       )-><span class="m">name</span>(<span class="s">'trial.update'</span>);
+<span class="m">Route</span>::<span class="m">get</span>   (<span class="s">'/trial-events/{trialEvent}/delete'</span>,  <span class="s">'...@confirmDelete'</span>)-><span class="m">name</span>(<span class="s">'trial.confirmDelete'</span>);
+<span class="m">Route</span>::<span class="m">delete</span>(<span class="s">'/trial-events/{trialEvent}'</span>,         <span class="s">'...@destroy'</span>      )-><span class="m">name</span>(<span class="s">'trial.destroy'</span>);</pre></div>
+
+      <div class="annotation">
+        <span class="num">注意</span>
+        <span><strong>静的ルートは {パラメータ} より上に書く</strong> ― <code>/trial-events/calendar</code> を <code>/trial-events/{trialEvent}</code> より後に書くと、"calendar" が trialEvent のIDとして解釈されてしまいます。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">注意</span>
+        <span><strong>PUT / DELETE はHTMLフォームで直接送れない</strong> ― Blade で <code>@method('PUT')</code> / <code>@method('DELETE')</code> を書くと、Laravel が内部的に変換してくれます。</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 7. ビュー（一覧・カレンダー） ========== -->
+<div class="section">
+  <div class="section-title">7. ビュー ― 体験会一覧・カレンダー</div>
+
+  <div class="concept">
+    <strong>Blade テンプレートとは？</strong><br>
+    Laravel のビューファイルです。<code>.blade.php</code> という拡張子で、HTML の中に <code>{{ $変数 }}</code> や <code>@if</code> / <code>@foreach</code> などの PHP 命令が書けます。<br>
+    <code>@extends('layouts.main')</code> で共通レイアウト（ヘッダー・サイドバー）を継承し、<code>@section('content')</code> の中にページ独自のHTMLを書きます。
+  </div>
+
+  <!-- experience.blade.php -->
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">resources/views/trial/experience.blade.php</span>
+      <span class="file-role role-all">全ロール</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会の一覧ページです。開催日の早い順に全件表示します。</p>
+      <div class="code-block"><pre>
+<span class="c">{{-- コントローラーから渡された $trialEvents を使う --}}</span>
+<span class="a">@if</span>(<span class="v">$trialEvents</span>->isEmpty())
+    <span class="c">&lt;!-- 体験会が0件のとき --&gt;</span>
+    &lt;p&gt;体験会はありません。&lt;/p&gt;
+<span class="a">@else</span>
+    <span class="c">&lt;!-- テーブルで一覧表示 --&gt;</span>
+    <span class="a">@foreach</span>(<span class="v">$trialEvents</span> <span class="k">as</span> <span class="v">$event</span>)
+    &lt;tr&gt;
+        &lt;td&gt;{{ <span class="v">$event</span>->event_date->format(<span class="s">'Y/n/j'</span>) }}&lt;/td&gt;
+        &lt;td&gt;&lt;a href="{{ route(<span class="s">'trial.show'</span>, <span class="v">$event</span>) }}"&gt;開く&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    <span class="a">@endforeach</span>
+<span class="a">@endif</span>
+
+<span class="c">{{-- 受付・管理者のみ「開催日登録」ボタンを表示 --}}</span>
+<span class="a">@if</span>(auth()-&gt;user()-&gt;role !== <span class="s">'instructor'</span>)
+    &lt;a href="{{ route(<span class="s">'trial.create'</span>) }}"&gt;開催日登録&lt;/a&gt;
+<span class="a">@endif</span></pre></div>
+    </div>
+  </div>
+
+  <!-- experience_calendar.blade.php -->
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">resources/views/trial/experience_calendar.blade.php</span>
+      <span class="file-role role-all">全ロール</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">月別カレンダー表示ページです。PHP でカレンダーのHTMLを生成し、日付クリックで右パネルに詳細を表示します。</p>
+      <table>
+        <tr><th>技術</th><th>使っている場所</th><th>役割</th></tr>
+        <tr><td>Carbon::create()</td><td>@php ブロック</td><td>指定した年月のオブジェクトを作る</td></tr>
+        <tr><td>array_fill()</td><td>@php ブロック</td><td>先頭の空白セル分の配列を作る</td></tr>
+        <tr><td>?year=&amp;month= (GETパラメータ)</td><td>前月・次月リンク</td><td>月の切り替えをページ再読み込みで実現</td></tr>
+        <tr><td>onclick="showDate(..., this)"</td><td>td セル</td><td>クリックしたセルの日付を JS 関数に渡す</td></tr>
+        <tr><td>テンプレートリテラル（`${}`）</td><td>JS の showDate 関数</td><td>HTMLを文字列で組み立てる</td></tr>
+        <tr><td>filter() / map()</td><td>JS の showDate 関数</td><td>配列から条件に合う要素を絞り込む・変換する</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 8. ビュー（登録・編集・確認・削除） ========== -->
+<div class="section">
+  <div class="section-title">8. ビュー ― 新規登録・編集・確認・削除</div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_newregistration.blade.php</span>
+      <span class="file-role role-reception">受付・管理者</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会の新規登録フォームページです。</p>
+      <div class="code-block"><pre>
+&lt;form method="<span class="s">POST</span>" action="{{ route(<span class="s">'trial.store'</span>) }}"&gt;
+    <span class="a">@csrf</span>  <span class="c">&lt;!-- セキュリティトークン（必須）--&gt;</span>
+
+    &lt;input type="<span class="s">date</span>" name="<span class="s">event_date</span>"
+           value="{{ old(<span class="s">'event_date'</span>) }}"&gt;
+           <span class="c">&lt;!-- old() → バリデーションエラー時に入力値を復元する --&gt;</span>
+
+    <span class="a">@error</span>(<span class="s">'event_date'</span>)
+        &lt;span&gt;{{ <span class="v">$message</span> }}&lt;/span&gt;  <span class="c">&lt;!-- バリデーションエラーを表示 --&gt;</span>
+    <span class="a">@enderror</span>
+&lt;/form&gt;</pre></div>
+      <div class="annotation">
+        <span class="num">@csrf</span>
+        <span>CSRF（クロスサイトリクエストフォージェリ）攻撃を防ぐための隠しトークンです。POSTフォームには必ず書きます。</span>
+      </div>
+      <div class="annotation">
+        <span class="num">old()</span>
+        <span>バリデーションエラーで前のページに戻ったとき、ユーザーが入力した値を再表示します。第2引数にデフォルト値を指定できます。</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_edit.blade.php</span>
+      <span class="file-role role-reception">受付・管理者</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">編集フォームページです。フォームと削除リンクが別々になっているのがポイントです。</p>
+      <div class="code-block"><pre>
+<span class="c">&lt;!-- 更新フォーム（id をつける） --&gt;</span>
+&lt;form method="POST" action="{{ route(<span class="s">'trial.confirmEdit'</span>, <span class="v">$trialEvent</span>) }}" id="<span class="s">edit-form</span>"&gt;
+    <span class="a">@csrf</span>
+    ... 入力フィールド ...
+&lt;/form&gt;
+
+&lt;!-- ボタンエリア（フォームの外に置く） --&gt;
+&lt;a href="{{ route(<span class="s">'trial.confirmDelete'</span>, <span class="v">$trialEvent</span>) }}"&gt;削除&lt;/a&gt;
+&lt;button type="submit" form="<span class="s">edit-form</span>"&gt;内容確認&lt;/button&gt;
+<span class="c">&lt;!-- form="edit-form" でフォームの外のボタンをフォームに紐づける --&gt;</span></pre></div>
+      <div class="annotation">
+        <span class="num">form="id"</span>
+        <span>HTML5 の機能です。ボタンに <code>form="フォームID"</code> を指定することで、フォームの外に置いたボタンをそのフォームの送信ボタンとして動かせます。これにより複数のボタンで別々の処理を実行できます。</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_conf.blade.php（編集確認）</span>
+      <span class="file-role role-reception">受付・管理者</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">編集内容の確認ページです。入力値を画面に表示しつつ、hidden フィールドで値をサーバーに送ります。</p>
+      <div class="code-block"><pre>
+<span class="c">&lt;!-- 値を表示するだけ（編集できない） --&gt;</span>
+&lt;span&gt;{{ <span class="v">$inputData</span>[<span class="s">'event_date'</span>] }}&lt;/span&gt;
+
+<span class="c">&lt;!-- 保存ボタンを押したときにサーバーへ値を送るために hidden で持ち回す --&gt;</span>
+&lt;form method="POST" action="{{ route(<span class="s">'trial.update'</span>, <span class="v">$trialEvent</span>) }}"&gt;
+    <span class="a">@csrf</span>
+    <span class="a">@method</span>(<span class="s">'PUT'</span>)  <span class="c">&lt;!-- HTMLは PUT を送れないので Laravel が変換する --&gt;</span>
+    &lt;input type="hidden" name="event_date" value="{{ <span class="v">$inputData</span>[<span class="s">'event_date'</span>] }}"&gt;
+    &lt;button type="submit"&gt;保存&lt;/button&gt;
+&lt;/form&gt;</pre></div>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_delete.blade.php</span>
+      <span class="file-role role-admin">管理者のみ</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">削除確認ページです。削除対象のデータを表示し、確認後に削除フォームを送信します。</p>
+      <div class="code-block"><pre>
+<span class="c">&lt;!-- 削除フォーム（id="delete-form" をつけておく） --&gt;</span>
+&lt;form method="POST" action="{{ route(<span class="s">'trial.destroy'</span>, <span class="v">$trialEvent</span>) }}" id="<span class="s">delete-form</span>"&gt;
+    <span class="a">@csrf</span>
+    <span class="a">@method</span>(<span class="s">'DELETE'</span>)
+&lt;/form&gt;
+
+&lt;span class="trial-delete-warning"&gt;体験会実施日の実施を削除しますか？&lt;/span&gt;
+&lt;button type="submit" form="<span class="s">delete-form</span>"&gt;削除&lt;/button&gt;</pre></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 9. ビュー（予約） ========== -->
+<div class="section">
+  <div class="section-title">9. ビュー ― 予約・予約確認・詳細</div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_reservation.blade.php</span>
+      <span class="file-role role-reception">受付・管理者</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会予約ページです。左に顧客情報、右に日付選択ボタンを並べた2カラムレイアウトです。</p>
+      <div class="code-block"><pre>
+<span class="c">&lt;!-- 体験会を1件ずつボタンとして表示する --&gt;</span>
+<span class="a">@foreach</span>(<span class="v">$trialEvents</span> <span class="k">as</span> <span class="v">$event</span>)
+    <span class="c">&lt;!-- ボタンを押すと確認ページへ送信される --&gt;</span>
+    &lt;form method="POST" action="{{ route(<span class="s">'trial.reservation.confirm'</span>, <span class="v">$inquiry</span>) }}"&gt;
+        <span class="a">@csrf</span>
+        &lt;input type="hidden" name="trial_event_id" value="{{ <span class="v">$event</span>->id }}"&gt;
+        &lt;button type="submit" class="trial-rsv-date-btn"&gt;
+            &lt;span&gt;{{ <span class="v">$event</span>->event_date->format(<span class="s">'Y/n/j'</span>) }}&lt;/span&gt;
+            &lt;span&gt;{{ <span class="v">$event</span>->course_name }}&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/form&gt;
+<span class="a">@endforeach</span></pre></div>
+      <div class="annotation">
+        <span class="num">ポイント</span>
+        <span>各ボタンがそれぞれ独立したフォームになっており、押したボタンの <code>trial_event_id</code> が送信されます。これでどの日程を選んだか判別できます。</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-header">
+      <span class="file-path">experience_details.blade.php</span>
+      <span class="file-role role-all">全ロール（予約取り消しは管理者のみ）</span>
+    </div>
+    <div class="file-body">
+      <p class="file-desc">体験会詳細ページです。左に体験会情報、右に参加生徒一覧を表示します。</p>
+      <div class="code-block"><pre>
+<span class="a">@foreach</span>(<span class="v">$reservations</span> <span class="k">as</span> <span class="v">$reservation</span>)
+    &lt;span&gt;{{ <span class="v">$reservation</span>->inquiry->student_name }}&lt;/span&gt;
+
+    <span class="c">&lt;!-- 予約取り消しボタン（管理者のみ表示） --&gt;</span>
+    <span class="a">@if</span>(auth()-&gt;user()-&gt;role === <span class="s">'admin'</span>)
+        &lt;form method="POST"
+              action="{{ route(<span class="s">'trial.reservation.destroy'</span>, <span class="v">$reservation</span>) }}"
+              onsubmit="return confirm(<span class="s">'予約を取り消しても良いですか？'</span>)"&gt;
+            <span class="c">&lt;!-- confirm() → ブラウザのダイアログを出す。キャンセルで送信を止める --&gt;</span>
+            <span class="a">@csrf</span>  <span class="a">@method</span>(<span class="s">'DELETE'</span>)
+            &lt;button type="submit"&gt;予約取り消し&lt;/button&gt;
+        &lt;/form&gt;
+    <span class="a">@endif</span>
+<span class="a">@endforeach</span></pre></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== フッター ========== -->
+<div style="margin-top:60px; padding-top:20px; border-top:1px solid #e3e8ef; text-align:center; color:#9ca3af; font-size:11px;">
+  プログラミング塾管理システム ／ 体験会機能コード解説ドキュメント
+</div>
+
+</body>
+</html>

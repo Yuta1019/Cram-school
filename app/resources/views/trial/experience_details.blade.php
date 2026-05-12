@@ -3,12 +3,17 @@
 @section('content')
 <div class="inq-page">
 
+    <!-- 予約取り消し後のフラッシュメッセージ -->
+    @if(session('success'))
+        <div class="trial-detail-flash">{{ session('success') }}</div>
+    @endif
+
     <!-- タイトル -->
     <div class="trial-detail-header">
         <h1 class="trial-detail-title">詳細</h1>
         <!-- 受付・管理者のみ編集ボタンを表示 -->
         @if(auth()->user()->role !== 'instructor')
-            <a href="#" class="trial-edit-btn">編集</a>
+            <a href="{{ route('trial.edit', $trialEvent) }}" class="trial-edit-btn">編集</a>
         @endif
     </div>
 
@@ -83,19 +88,39 @@
             @else
                 <!-- 予約を1件ずつ表示する -->
                 @foreach($reservations as $reservation)
-                    <div class="trial-detail-field">
-                        <span class="trial-detail-label">生徒名</span>
-                        <span class="trial-detail-value">
-                            @if($reservation->inquiry && $reservation->inquiry->student_name)
-                                {{ $reservation->inquiry->student_name }}
-                            @else
-                                －
-                            @endif
-                        </span>
-                    </div>
-                    <div class="trial-detail-field">
-                        <span class="trial-detail-label">予約状態</span>
-                        <span class="trial-detail-value">{{ $reservation->reservation_status }}</span>
+                    <!-- 生徒情報（左）+ 予約取り消しボタン（右）を横並びにする -->
+                    <div class="trial-detail-reservation">
+
+                        <!-- 生徒情報エリア -->
+                        <div class="trial-detail-reservation-info">
+                            <div class="trial-detail-field">
+                                <span class="trial-detail-label">生徒名</span>
+                                <span class="trial-detail-value">
+                                    @if($reservation->inquiry && $reservation->inquiry->student_name)
+                                        {{ $reservation->inquiry->student_name }}
+                                    @else
+                                        －
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="trial-detail-field">
+                                <span class="trial-detail-label">予約状態</span>
+                                <span class="trial-detail-value">{{ $reservation->reservation_status }}</span>
+                            </div>
+                        </div>
+
+                        <!-- 予約取り消しボタン（管理者のみ表示） -->
+                        @if(auth()->user()->role === 'admin')
+                            <!-- onsubmit で確認ダイアログを出す。キャンセルを押したら送信しない -->
+                            <form method="POST"
+                                  action="{{ route('trial.reservation.destroy', $reservation) }}"
+                                  onsubmit="return confirm('予約を取り消しても良いですか？')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="trial-rsv-cancel-btn">予約取り消し</button>
+                            </form>
+                        @endif
+
                     </div>
                     <hr class="trial-detail-divider">
                 @endforeach
