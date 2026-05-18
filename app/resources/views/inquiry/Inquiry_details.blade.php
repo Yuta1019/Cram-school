@@ -164,7 +164,9 @@
                 @if(auth()->user()->role !== 'instructor')
                     <a href="{{ route('trial.reservation.create', $inquiry) }}" class="inqdetail-btn-trial">体験会予約へ進む</a>
                 @endif
-                <a href="#" class="inqdetail-btn-ai">AIメール</a>
+                @if(auth()->user()->role !== 'instructor')
+                    <a href="{{ route('ai_mail.create', $inquiry) }}" class="inqdetail-btn-ai">AIメール</a>
+                @endif
             </div>
 
         </div>

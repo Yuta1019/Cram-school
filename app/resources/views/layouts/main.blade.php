@@ -42,7 +42,6 @@
                class="main-sidebar-item {{ request()->routeIs('trial.*') ? 'active' : '' }}">
                 体験会一覧
             </a>
-            <a href="#" class="main-sidebar-item">AIメール</a>
             <a href="#" class="main-sidebar-item">設定</a>
         </nav>
     </aside>

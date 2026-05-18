@@ -44,32 +44,52 @@
         <div class="trial-rsv-dates">
             <h2 class="trial-rsv-card-title">日付選択</h2>
 
+            <!-- 定員オーバー時のエラーメッセージ -->
+            @if(session('error'))
+                <div class="trial-rsv-error">{{ session('error') }}</div>
+            @endif
+
             @if($trialEvents->isEmpty())
                 <!-- 体験会が登録されていないとき -->
                 <p class="trial-rsv-empty">体験会の予定がありません。</p>
             @else
-                <!-- 列ヘッダー（開催日・時間・コース・定員） -->
+                <!-- 列ヘッダー（開催日・時間・コース・残り） -->
                 <div class="trial-rsv-date-header">
                     <span>開催日</span>
                     <span>時間</span>
                     <span>コース</span>
-                    <span>定員</span>
+                    <span>残り</span>
                 </div>
 
-                <!-- 体験会を1件ずつボタンとして表示する -->
-                <!-- ボタンを押すと、その体験会で予約が作成される -->
+                <!-- 体験会を1件ずつ表示する -->
                 @foreach($trialEvents as $event)
-                    <form method="POST" action="{{ route('trial.reservation.confirm', $inquiry) }}">
-                        @csrf
-                        <!-- 選択した体験会のIDを送信する -->
-                        <input type="hidden" name="trial_event_id" value="{{ $event->id }}">
-                        <button type="submit" class="trial-rsv-date-btn">
+                    @php
+                        // 定員に達しているか判定する
+                        $isFull = $event->reserved_count >= $event->capacity;
+                        $remaining = $event->capacity - $event->reserved_count;
+                    @endphp
+
+                    @if($isFull)
+                        <!-- 満員のときはボタンを押せないようにする -->
+                        <div class="trial-rsv-date-btn trial-rsv-date-btn--full">
                             <span>{{ $event->event_date->format('Y/n/j') }}</span>
                             <span>{{ $event->start_time }} 〜 {{ $event->end_time }}</span>
                             <span>{{ $event->course_name }}</span>
-                            <span>{{ $event->capacity }} 名</span>
-                        </button>
-                    </form>
+                            <span class="trial-rsv-full-label">満員</span>
+                        </div>
+                    @else
+                        <!-- 空きがある場合は選択できる -->
+                        <form method="POST" action="{{ route('trial.reservation.confirm', $inquiry) }}">
+                            @csrf
+                            <input type="hidden" name="trial_event_id" value="{{ $event->id }}">
+                            <button type="submit" class="trial-rsv-date-btn">
+                                <span>{{ $event->event_date->format('Y/n/j') }}</span>
+                                <span>{{ $event->start_time }} 〜 {{ $event->end_time }}</span>
+                                <span>{{ $event->course_name }}</span>
+                                <span>残り {{ $remaining }} 名</span>
+                            </button>
+                        </form>
+                    @endif
                 @endforeach
             @endif
         </div>
