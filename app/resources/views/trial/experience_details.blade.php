@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 
 @section('content')
 <div class="inq-page">
@@ -12,7 +12,7 @@
     <div class="trial-detail-header">
         <h1 class="trial-detail-title">詳細</h1>
         <!-- 受付・管理者のみ編集ボタンを表示 -->
-        @if(auth()->user()->role !== 'instructor')
+        @if(auth()->user()->role !== 'teacher')
             <a href="{{ route('trial.edit', $trialEvent) }}" class="trial-edit-btn">編集</a>
         @endif
     </div>

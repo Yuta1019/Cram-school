@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 
 @section('content')
 <div class="inq-page">
@@ -10,7 +10,7 @@
     <!-- タブ（所感がアクティブ） -->
     <div class="inqdetail-tabs">
         <a href="{{ route('inquiry.show', $inquiry) }}" class="inqdetail-tab">基本情報</a>
-        @if(auth()->user()->role !== 'instructor')
+        @if(auth()->user()->role !== 'teacher')
             <a href="{{ route('contact.index', $inquiry) }}" class="inqdetail-tab">連絡履歴</a>
         @else
             <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>連絡履歴</button>

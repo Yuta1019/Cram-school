@@ -4,7 +4,7 @@
 <div class="inq-page">
 
     <div class="inq-header">
-        <h1 class="inq-title">問い合わせ削除</h1>
+        <h1 class="inq-title">お問い合わせ削除</h1>
     </div>
 
     <!-- タブ -->
@@ -18,6 +18,8 @@
 
         <!-- 基本情報 -->
         <div class="inqdetail-left">
+            <h2 class="inqdetail-section-title">基本情報</h2>
+
             <div class="inqdetail-left-header"></div>
 
             <div class="inqdetail-field">

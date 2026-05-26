@@ -42,7 +42,12 @@
                class="main-sidebar-item {{ request()->routeIs('trial.*') ? 'active' : '' }}">
                 体験会一覧
             </a>
-            <a href="#" class="main-sidebar-item">設定</a>
+            @if(auth()->user()->role === 'admin')
+            <a href="{{ route('setting.index') }}"
+               class="main-sidebar-item {{ request()->routeIs('setting.*') ? 'active' : '' }}">
+                設定
+            </a>
+            @endif
         </nav>
     </aside>
 

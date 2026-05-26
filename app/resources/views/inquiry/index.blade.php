@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 
 @section('content')
 <div class="inq-page">
@@ -44,7 +44,9 @@
             @endforeach
         </select>
         <button type="submit" class="inq-btn-search">検索</button>
-        <a href="{{ route('inquiry.create') }}" class="inq-btn-new">新規登録</a>
+        @if(auth()->user()->role !== 'teacher')
+            <a href="{{ route('inquiry.create') }}" class="inq-btn-new">新規登録</a>
+        @endif
     </form>
 
     <!-- 顧客一覧テーブル -->

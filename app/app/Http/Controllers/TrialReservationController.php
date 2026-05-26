@@ -18,7 +18,7 @@ class TrialReservationController extends Controller
     // 講師ロールのユーザーはアクセスを拒否する
     private function checkRole()
     {
-        if (auth()->user()->role === 'instructor') {
+        if (auth()->user()->role === 'teacher') {
             abort(403, 'この操作は受付・管理者のみ利用できます。');
         }
     }

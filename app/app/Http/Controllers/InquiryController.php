@@ -21,7 +21,7 @@ class InquiryController extends Controller
     {
         $role = auth()->user()->role;
 
-        if ($role === 'instructor') {
+        if ($role === 'teacher') {
             abort(403, 'この操作は受付・管理者のみ利用できます。');
         }
     }

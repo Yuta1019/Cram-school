@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 
 @section('content')
 <div class="inq-page">
@@ -11,7 +11,7 @@
     <!-- タブ -->
     <div class="inqdetail-tabs">
         <button type="button" class="inqdetail-tab inqdetail-tab--active">基本情報</button>
-        @if(auth()->user()->role !== 'instructor')
+        @if(auth()->user()->role !== 'teacher')
             <a href="{{ route('contact.index', $inquiry) }}" class="inqdetail-tab">連絡履歴</a>
         @else
             <button type="button" class="inqdetail-tab inqdetail-tab--disabled" disabled>連絡履歴</button>
@@ -23,9 +23,10 @@
 
         <!-- 基本情報 -->
         <div class="inqdetail-left">
-            <!-- 編集ボタン -->
+            <!-- 基本情報タイトルと編集ボタンを横並び -->
             <div class="inqdetail-left-header">
-                @if(auth()->user()->role !== 'instructor')
+                <h2 class="inqdetail-section-title">基本情報</h2>
+                @if(auth()->user()->role !== 'teacher')
                     <a href="{{ route('inquiry.edit', $inquiry) }}" class="inqdetail-btn-edit">編集</a>
                 @endif
             </div>
@@ -101,23 +102,11 @@
 
                 <div class="inqdetail-right-field">
                     <span class="inqdetail-right-label">お問い合わせ内容</span>
-                    <p class="inqdetail-text">
-                        @if($inquiry->inquiry_content)
-                            {{ $inquiry->inquiry_content }}
-                        @else
-                            －
-                        @endif
-                    </p>
+                    <p class="inqdetail-text">{{ $inquiry->inquiry_content ?: '－' }}</p>
                 </div>
                 <div class="inqdetail-right-field">
                     <span class="inqdetail-right-label">メモ</span>
-                    <p class="inqdetail-text">
-                        @if($inquiry->memo)
-                            {{ $inquiry->memo }}
-                        @else
-                            －
-                        @endif
-                    </p>
+                    <p class="inqdetail-text">{{ $inquiry->memo ?: '－' }}</p>
                 </div>
             </div>
 
@@ -161,10 +150,10 @@
 
             <!-- アクションボタン（受付・管理者のみ体験会予約ボタンを表示） -->
             <div class="inqdetail-bottom-actions">
-                @if(auth()->user()->role !== 'instructor')
+                @if(auth()->user()->role !== 'teacher')
                     <a href="{{ route('trial.reservation.create', $inquiry) }}" class="inqdetail-btn-trial">体験会予約へ進む</a>
                 @endif
-                @if(auth()->user()->role !== 'instructor')
+                @if(auth()->user()->role !== 'teacher')
                     <a href="{{ route('ai_mail.create', $inquiry) }}" class="inqdetail-btn-ai">AIメール</a>
                 @endif
             </div>

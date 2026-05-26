@@ -726,7 +726,7 @@ body.main-page-body {
 .inqdetail-input {
   flex: 1;
   width: 100%;
-  height: 34px;
+  height: 38px;
   padding: 0 10px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -746,10 +746,18 @@ body.main-page-body {
   border-color: #ef4444;
 }
 
+/* ラップ内の入力欄は縦方向に伸びないよう固定する */
+.inqdetail-input-wrap .inqdetail-input {
+  flex: none;
+  width: 100%;
+  height: 38px;
+}
+
 /* セレクトボックス */
 .inqdetail-select {
-  flex: 1;
-  height: 34px;
+  width: 100%;
+  flex: none;
+  height: 38px;
   padding: 0 10px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -792,9 +800,12 @@ body.main-page-body {
   border-radius: 8px;
   font-size: 13px;
   color: #1f2937;
+  text-align: left;
   resize: vertical;
   box-sizing: border-box;
   background: #f9fafb;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .inqdetail-textarea:focus {
@@ -899,11 +910,16 @@ body.main-page-body {
 /* ============================================================
    問い合わせ詳細ページ固有スタイル
    ============================================================ */
-/* 左パネル上部（編集ボタンを右寄せ） */
+/* 左パネル上部（タイトルと編集ボタンを左右に配置） */
 .inqdetail-left-header {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.inqdetail-left-header .inqdetail-section-title {
+  margin: 0;
 }
 
 /* ④編集ボタン（枠線スタイル） */
@@ -964,6 +980,8 @@ body.main-page-body {
   margin: 0;
   white-space: pre-wrap;
   line-height: 1.6;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 /* ⑤体験会予約・⑥AIメール ボタンエリア */
@@ -1298,6 +1316,7 @@ a.inqdetail-tab {
 .trial-register-area {
   display: flex;
   justify-content: flex-end;
+  padding-bottom: 16px;
 }
 
 /* 開催日登録ボタン */
@@ -2135,4 +2154,175 @@ a.inqdetail-tab {
   font-size: 12px;
   color: #dc2626;
   margin: 6px 0 0 0;
+}
+
+/* ============================================================
+   設定ページ（.setting-*）
+   ============================================================ */
+
+/* フラッシュメッセージ */
+.setting-flash {
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.setting-flash--success {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #15803d;
+}
+.setting-flash--error {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+}
+
+/* カード全体 */
+.setting-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 36px;
+  max-width: 640px;
+}
+
+/* カードタイトル */
+.setting-card-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 28px;
+}
+
+/* データ種別の選択ボタン行 */
+.setting-type-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.setting-type-btn {
+  flex: 1;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+.setting-type-btn.active {
+  border-color: #2563eb;
+  color: #2563eb;
+  font-weight: bold;
+  background: #eff6ff;
+}
+
+/* ファイル選択行 */
+.setting-file-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* ファイル名表示エリア */
+.setting-filename {
+  flex: 1;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+  font-size: 13px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ファイル選択ボタン */
+.setting-file-btn {
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.setting-file-btn:hover {
+  background: #f3f4f6;
+}
+
+/* 実行ボタン行 */
+.setting-action-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+/* CSV取込ボタン */
+.setting-import-btn {
+  flex: 1;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.setting-import-btn:hover {
+  background: #1d4ed8;
+}
+
+/* CSV出力ボタン */
+.setting-export-btn {
+  flex: 1;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.setting-export-btn:hover {
+  background: #15803d;
+}
+
+/* ⑥状態表示 */
+.setting-status {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* バリデーションエラー文字 */
+.setting-error-msg {
+  font-size: 12px;
+  color: #dc2626;
+  display: block;
+  margin: -10px 0 10px 0;
 }

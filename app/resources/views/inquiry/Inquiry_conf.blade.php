@@ -12,6 +12,8 @@
 
         <!-- 基本情報 -->
         <div class="inqdetail-left">
+            <h2 class="inqdetail-section-title">基本情報</h2>
+
             <div class="inqdetail-left-header"></div>
 
             <div class="inqdetail-field">
@@ -84,23 +86,11 @@
 
                 <div class="inqdetail-right-field">
                     <span class="inqdetail-right-label">お問い合わせ内容</span>
-                    <p class="inqdetail-text">
-                        @if($inputData['inquiry_content'])
-                            {{ $inputData['inquiry_content'] }}
-                        @else
-                            －
-                        @endif
-                    </p>
+                    <p class="inqdetail-text">{{ $inputData['inquiry_content'] ?: '－' }}</p>
                 </div>
                 <div class="inqdetail-right-field">
                     <span class="inqdetail-right-label">メモ</span>
-                    <p class="inqdetail-text">
-                        @if($inputData['memo'])
-                            {{ $inputData['memo'] }}
-                        @else
-                            －
-                        @endif
-                    </p>
+                    <p class="inqdetail-text">{{ $inputData['memo'] ?: '－' }}</p>
                 </div>
             </div>
 

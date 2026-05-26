@@ -4,7 +4,7 @@
 <div class="inq-page">
 
     <div class="inq-header">
-        <h1 class="inq-title">問い合わせ新規登録</h1>
+        <h1 class="inq-title">お問い合わせ新規登録</h1>
     </div>
 
     <form method="POST" action="{{ route('inquiry.store') }}">
@@ -17,7 +17,7 @@
                 <h2 class="inqdetail-section-title">基本情報</h2>
 
                 <div class="inqdetail-field">
-                    <span class="inqdetail-label">保護者者</span>
+                    <span class="inqdetail-label">保護者</span>
                     <div class="inqdetail-input-wrap">
                         <input type="text" name="parent_name" value="{{ old('parent_name') }}"
                                class="inqdetail-input @error('parent_name') is-error @enderror">
@@ -65,10 +65,10 @@
 
             <!-- 問い合わせ内容・メモ -->
             <div class="inqdetail-right">
-                <h2 class="inqdetail-section-title">問い合わせ内容 / メモ</h2>
+                <h2 class="inqdetail-section-title">お問い合わせ内容 / メモ</h2>
 
                 <div class="inqdetail-right-field">
-                    <span class="inqdetail-right-label">問い合わせ内容</span>
+                    <span class="inqdetail-right-label">お問い合わせ内容</span>
                     <textarea name="inquiry_content" class="inqdetail-textarea" rows="4">{{ old('inquiry_content') }}</textarea>
                 </div>
 

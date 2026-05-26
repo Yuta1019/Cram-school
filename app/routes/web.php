@@ -70,3 +70,8 @@ Route::post('/trial-events/{trialEvent}/confirm', 'TrialEventController@confirmE
 Route::put('/trial-events/{trialEvent}', 'TrialEventController@update')->name('trial.update');
 Route::get('/trial-events/{trialEvent}/delete', 'TrialEventController@confirmDelete')->name('trial.confirmDelete');
 Route::delete('/trial-events/{trialEvent}', 'TrialEventController@destroy')->name('trial.destroy');
+
+// 設定
+Route::get('/setting',         'SettingController@index')->name('setting.index');
+Route::post('/setting/import', 'SettingController@import')->name('setting.import');
+Route::get('/setting/export',  'SettingController@export')->name('setting.export');

@@ -16,7 +16,7 @@ class AiMailController extends Controller
     // 講師ロールのユーザーはアクセスを拒否する
     private function checkRole()
     {
-        if (auth()->user()->role === 'instructor') {
+        if (auth()->user()->role === 'teacher') {
             abort(403, 'この操作は受付・管理者のみ利用できます。');
         }
     }
@@ -41,18 +41,18 @@ class AiMailController extends Controller
         ]);
 
         // OpenAIのAPIに接続してデータを送る
-        $ch = curl_init('https://api.openai.com/v1/chat/completions');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST,           true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,     $requestBody);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        $curlHandle = curl_init('https://api.openai.com/v1/chat/completions');
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_POST,           true);
+        curl_setopt($curlHandle, CURLOPT_POSTFIELDS,     $requestBody);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $apiKey,
             'Content-Type: application/json',
         ]);
-        $responseBody = curl_exec($ch);
-        $httpCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $curlError    = curl_error($ch);
-        curl_close($ch);
+        $responseBody = curl_exec($curlHandle);
+        $httpCode     = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE);
+        $curlError    = curl_error($curlHandle);
+        curl_close($curlHandle);
 
         // 通信エラーが起きた場合
         if ($curlError) {
@@ -65,10 +65,10 @@ class AiMailController extends Controller
         }
 
         // 受け取ったJSONから生成された文章を取り出す
-        $data = json_decode($responseBody, true);
-        $text = $data['choices'][0]['message']['content'] ?? '';
+        $decodedApiResponse = json_decode($responseBody, true);
+        $generatedText      = $decodedApiResponse['choices'][0]['message']['content'] ?? '';
 
-        return ['text' => trim($text)];
+        return ['text' => trim($generatedText)];
     }
 
     // AIメール作成ページ表示（受付・管理者のみ）

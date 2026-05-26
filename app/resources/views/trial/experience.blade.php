@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 
 @section('content')
 <div class="inq-page">
@@ -6,6 +6,13 @@
     <!-- ページタイトル -->
     <div class="inq-header">
         <h1 class="inq-title">体験会</h1>
+    </div>
+
+            <!-- 開催日登録ボタン -->
+    <div class="trial-register-area">
+        @if(auth()->user()->role !== 'teacher')
+            <a href="{{ route('trial.create') }}" class="trial-register-btn">開催日登録</a>
+        @endif
     </div>
 
     <!-- メインカード -->
@@ -77,13 +84,6 @@
             </table>
         @endif
 
-    </div>
-
-    <!-- 開催日登録ボタン -->
-    <div class="trial-register-area">
-        @if(auth()->user()->role !== 'instructor')
-            <a href="{{ route('trial.create') }}" class="trial-register-btn">開催日登録</a>
-        @endif
     </div>
 
 </div>
