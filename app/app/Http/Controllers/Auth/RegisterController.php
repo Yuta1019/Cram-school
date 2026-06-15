@@ -35,34 +35,40 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // ログイン済みのユーザーのみアクセスできる
+        $this->middleware('auth');
+    }
+
+    // 管理者以外のアクセスを拒否する
+    private function checkAdmin()
+    {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'この操作は管理者のみ利用できます。');
+        }
     }
 
     /**
      * Show the application registration form.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function showRegistrationForm()
     {
+        $this->checkAdmin();
+
         return view('auth.signup');
     }
 
     /**
      * Handle the signup confirmation screen.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\View\View
      */
     public function confirm(Request $request)
     {
+        $this->checkAdmin();
+
         $data = $request->validate([
-            'role' => ['required', 'in:teacher,reception,admin'],
+            'role' => ['required', 'in:teacher,reception'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -75,19 +81,19 @@ class RegisterController extends Controller
 
     /**
      * Handle a registration request for the application without auto-login.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function register(Request $request)
     {
+        $this->checkAdmin();
+
         $this->validator($request->all())->validate();
 
         $user = $this->create($request->all());
 
         event(new Registered($user));
 
-        return redirect()->route('login')->with('status', '登録が完了しました。ログインしてください。');
+        // 登録後はお問い合わせ一覧へ（管理者はすでにログイン済みのため）
+        return redirect()->route('inquiry.index')->with('success', $user->name . ' を登録しました。');
     }
 
     /**
@@ -99,7 +105,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'role' => ['required', 'in:teacher,reception,admin'],
+            'role' => ['required', 'in:teacher,reception'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],

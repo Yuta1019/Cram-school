@@ -4,7 +4,7 @@
 <div class="inq-page">
 
     <div class="inq-header">
-        <h1 class="inq-title">問い合わせ編集</h1>
+        <h1 class="inq-title">お問い合わせ編集</h1>
     </div>
 
     <form method="POST" action="{{ route('inquiry.confirmEdit', $inquiry) }}">

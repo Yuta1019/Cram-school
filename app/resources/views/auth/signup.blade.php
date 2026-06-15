@@ -27,7 +27,6 @@
                             <option value="">選択してください</option>
                             <option value="teacher" {{ old('role') === 'teacher' ? 'selected' : '' }}>講師</option>
                             <option value="reception" {{ old('role') === 'reception' ? 'selected' : '' }}>受付</option>
-                            <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>管理者</option>
                         </select>
                     </div>
 
@@ -54,6 +53,10 @@
                     <button type="submit" class="login-submit-btn">
                         入力確認
                     </button>
+
+                    <a href="{{ route('inquiry.index') }}" class="login-back-link">
+                        ← 一覧へ戻る
+                    </a>
                 </form>
             </div>
         </main>

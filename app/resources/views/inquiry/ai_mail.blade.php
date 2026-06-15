@@ -94,6 +94,66 @@
         </div>
 
     </div>
+
+    <!-- 送信履歴 -->
+    <div class="ai-mail-logs">
+        <div class="ai-mail-logs-header">
+            <h2 class="ai-mail-card-title" style="margin:0;">この問い合わせの送信履歴</h2>
+        </div>
+
+        @if($mailLogs->isEmpty())
+            <p class="ai-mail-logs-empty">送信履歴はありません。</p>
+        @else
+            <div class="inq-table-wrap">
+                <table class="inq-table">
+                    <thead>
+                        <tr>
+                            <th>送信日時</th>
+                            <th>送信者</th>
+                            <th>送信先</th>
+                            <th>件名</th>
+                            <th>本文</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($mailLogs as $log)
+                        <tr>
+                            <td class="maillog-date">{{ $log->created_at->format('Y/n/j H:i') }}</td>
+                            <td>
+                                @if($log->sentBy)
+                                    {{ $log->sentBy->name }}
+                                @else
+                                    －
+                                @endif
+                            </td>
+                            <td>{{ $log->to_email }}</td>
+                            <td>{{ $log->subject }}</td>
+                            <td>
+                                <button type="button"
+                                        class="maillog-body-btn"
+                                        data-body="{{ e($log->body) }}">
+                                    本文を見る
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
+
+</div>
+
+<!-- 本文モーダル -->
+<div id="maillog-modal" class="maillog-modal-overlay" style="display:none;">
+    <div class="maillog-modal-box">
+        <div class="maillog-modal-header">
+            <span class="maillog-modal-title">メール本文</span>
+            <button type="button" id="maillog-modal-close" class="maillog-modal-close">✕</button>
+        </div>
+        <pre id="maillog-modal-body" class="maillog-modal-body"></pre>
+    </div>
 </div>
 
 <script>
@@ -162,6 +222,24 @@ document.getElementById('proofread-btn').addEventListener('click', function () {
         'proofread-loading',
         'proofread-error'
     );
+});
+
+// 本文モーダルの開閉
+document.querySelectorAll('.maillog-body-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.getElementById('maillog-modal-body').textContent = this.dataset.body;
+        document.getElementById('maillog-modal').style.display = 'flex';
+    });
+});
+
+document.getElementById('maillog-modal-close').addEventListener('click', function() {
+    document.getElementById('maillog-modal').style.display = 'none';
+});
+
+document.getElementById('maillog-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
 });
 </script>
 @endsection

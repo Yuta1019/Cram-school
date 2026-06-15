@@ -43,6 +43,7 @@ Route::delete('/inquiry/{inquiry}', 'InquiryController@destroy')->name('inquiry.
 Route::get('/inquiry/{inquiry}/contacts', 'ContactController@index')->name('contact.index');
 Route::get('/inquiry/{inquiry}/contacts/create', 'ContactController@create')->name('contact.create');
 Route::post('/inquiry/{inquiry}/contacts', 'ContactController@store')->name('contact.store');
+Route::delete('/contacts/{contactHistory}', 'ContactController@destroy')->name('contact.destroy');
 
 // 所感
 Route::get('/inquiry/{inquiry}/lesson-notes/create', 'LessonNoteController@create')->name('lesson_note.create');
@@ -50,8 +51,10 @@ Route::post('/inquiry/{inquiry}/lesson-notes', 'LessonNoteController@store')->na
 
 // AIメール作成
 Route::get('/inquiry/{inquiry}/ai-mail', 'AiMailController@create')->name('ai_mail.create');
+Route::post('/inquiry/{inquiry}/ai-mail/auth', 'AiMailController@verifyPassword')->name('ai_mail.verify');
 Route::post('/inquiry/{inquiry}/ai-mail/generate', 'AiMailController@generate')->name('ai_mail.generate');
 Route::post('/inquiry/{inquiry}/ai-mail/send', 'AiMailController@send')->name('ai_mail.send');
+
 
 // 体験会予約
 Route::get('/inquiry/{inquiry}/trial-reservation', 'TrialReservationController@create')->name('trial.reservation.create');

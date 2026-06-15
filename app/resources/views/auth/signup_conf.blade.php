@@ -20,7 +20,7 @@
 
                     <div class="login-form-group">
                         <label class="login-label">役職</label>
-                        <div class="login-confirm-value">{{ $data['role'] === 'teacher' ? '講師' : ($data['role'] === 'reception' ? '受付' : '管理者') }}</div>
+                        <div class="login-confirm-value">{{ $data['role'] === 'teacher' ? '講師' : '受付' }}</div>
                     </div>
 
                     <div class="login-form-group">

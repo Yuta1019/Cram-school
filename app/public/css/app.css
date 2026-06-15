@@ -191,6 +191,20 @@ body.login-page-body {
   margin: 8px auto 18px;
 }
 
+/* 新規登録ページの「一覧へ戻る」リンク */
+.login-back-link {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.login-back-link:hover {
+  color: #374151;
+  text-decoration: underline;
+}
+
 /* 「パスワードお忘れの方」などのサブリンクグループ */
 .login-sub-links {
   display: flex;
@@ -1157,6 +1171,123 @@ a.inqdetail-tab {
   justify-content: flex-end;
 }
 
+/* 連絡履歴内のサブタブ行 */
+.contact-subtabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* サブタブボタン */
+.contact-subtab {
+  height: 32px;
+  padding: 0 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* アクティブなサブタブ */
+.contact-subtab--active {
+  background: #13294b;
+  border-color: #13294b;
+  color: #fff;
+}
+
+/* 削除ボタン（各行） */
+.contact-delete-btn {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.contact-delete-btn:hover {
+  background: #dc2626;
+}
+
+/* 削除確認モーダル：背景オーバーレイ */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* 削除確認モーダル：白いダイアログ本体 */
+.contact-modal-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 36px 40px;
+  text-align: center;
+  min-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* モーダル本文テキスト */
+.contact-modal-text {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  color: #1f2937;
+}
+
+/* モーダルボタン行 */
+.contact-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* 「はい」ボタン（赤） */
+.contact-modal-btn-yes {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 32px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.contact-modal-btn-yes:hover {
+  background: #dc2626;
+}
+
+/* 「いいえ」ボタン（グレー） */
+.contact-modal-btn-no {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 32px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.contact-modal-btn-no:hover {
+  background: #e5e7eb;
+}
+
+/* 削除成功フラッシュメッセージ */
+.inq-flash-success {
+  background: #d1fae5;
+  border-left: 4px solid #10b981;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  color: #065f46;
+  font-size: 14px;
+}
+
 /* 所感ページ：保存完了メッセージ */
 .impression-success-msg {
   max-width: 600px;
@@ -1990,6 +2121,111 @@ a.inqdetail-tab {
   color: #b91c1c;
 }
 
+/* パスワード確認画面：中央寄せコンテナ */
+.ai-mail-auth-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+/* パスワード確認カード */
+.ai-mail-auth-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 40px 48px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* カードタイトル */
+.ai-mail-auth-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #13294b;
+  margin: 0 0 8px;
+}
+
+/* 説明文 */
+.ai-mail-auth-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 20px;
+}
+
+/* エラーメッセージ */
+.ai-mail-auth-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  color: #b91c1c;
+  font-size: 13px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+/* フィールド */
+.ai-mail-auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+/* ラベル */
+.ai-mail-auth-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* 入力欄 */
+.ai-mail-auth-input {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #111827;
+  width: 100%;
+  box-sizing: border-box;
+}
+.ai-mail-auth-input:focus {
+  outline: none;
+  border-color: #13294b;
+  box-shadow: 0 0 0 2px rgba(19,41,75,0.15);
+}
+
+/* 確認ボタン */
+.ai-mail-auth-btn {
+  width: 100%;
+  height: 44px;
+  background: #4f8df7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.ai-mail-auth-btn:hover {
+  opacity: 0.85;
+}
+
+/* 戻るリンク */
+.ai-mail-auth-back {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+  text-decoration: none;
+}
+.ai-mail-auth-back:hover {
+  color: #13294b;
+}
+
 /* 左（顧客情報入力）+ 右（メール作成）を横並びにするコンテナ */
 .ai-mail-body {
   display: flex;
@@ -2154,6 +2390,139 @@ a.inqdetail-tab {
   font-size: 12px;
   color: #dc2626;
   margin: 6px 0 0 0;
+}
+
+/* 送信履歴セクション */
+.ai-mail-logs {
+  background: #fff;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-top: 24px;
+}
+
+/* 送信履歴ヘッダー行（タイトル＋全件リンク） */
+.ai-mail-logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* 全件の送信履歴へのリンク */
+.ai-mail-logs-all-link {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+}
+.ai-mail-logs-all-link:hover {
+  text-decoration: underline;
+}
+
+/* 送信履歴が0件のときのテキスト */
+.ai-mail-logs-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* 送信日時列（幅を固定） */
+.maillog-date {
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+/* 問い合わせリンク */
+.maillog-inquiry-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 13px;
+}
+.maillog-inquiry-link:hover {
+  text-decoration: underline;
+}
+
+/* 本文を見るボタン */
+.maillog-body-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.maillog-body-btn:hover {
+  background: #e5e7eb;
+}
+
+/* 本文モーダル：背景オーバーレイ */
+.maillog-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* 本文モーダル：ダイアログ本体 */
+.maillog-modal-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 32px;
+  width: 560px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* モーダルヘッダー行（タイトル＋閉じるボタン） */
+.maillog-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* モーダルタイトル */
+.maillog-modal-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+/* 閉じるボタン */
+.maillog-modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.maillog-modal-close:hover {
+  color: #111827;
+}
+
+/* 本文表示エリア（pre タグ） */
+.maillog-modal-body {
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #374151;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0;
 }
 
 /* ============================================================

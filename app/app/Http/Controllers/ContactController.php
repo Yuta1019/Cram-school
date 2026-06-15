@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ContactHistory;
 use App\Inquiry;
+use App\MailLog;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,13 @@ class ContactController extends Controller
         // 担当者の選択肢
         $users = User::orderBy('name')->get();
 
-        return view('contact.contact', compact('inquiry', 'contactHistories', 'users'));
+        // この問い合わせのメール送信履歴を取得する
+        $mailLogs = MailLog::with('sentBy')
+                           ->where('inquiry_id', $inquiry->id)
+                           ->orderBy('created_at', 'desc')
+                           ->get();
+
+        return view('contact.contact', compact('inquiry', 'contactHistories', 'users', 'mailLogs'));
     }
 
     // 連絡履歴の新規登録フォーム表示
@@ -83,6 +90,18 @@ class ContactController extends Controller
         $responseStatusLabels = ContactHistory::RESPONSE_STATUS_LABELS;
 
         return view('contact.contact_newregistration', compact('inquiry', 'users', 'responseStatusLabels'));
+    }
+
+    // 連絡履歴の削除処理（管理者のみ）
+    public function destroy(ContactHistory $contactHistory)
+    {
+        $this->checkAdmin();
+
+        $inquiry = Inquiry::findOrFail($contactHistory->inquiry_id);
+        $contactHistory->delete();
+
+        return redirect()->route('contact.index', $inquiry)
+            ->with('success', '連絡履歴を削除しました。');
     }
 
     // 連絡履歴の登録処理（バリデーション → 保存 → 一覧ページへ移動）

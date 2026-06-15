@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Inquiry;
+use App\MailLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AiMailController extends Controller
 {
@@ -19,6 +21,12 @@ class AiMailController extends Controller
         if (auth()->user()->role === 'teacher') {
             abort(403, 'この操作は受付・管理者のみ利用できます。');
         }
+    }
+
+    // AIメールページのパスワード認証が済んでいるか確認する
+    private function isVerified()
+    {
+        return session('ai_mail_auth') === true;
     }
 
     // ChatGPT APIを呼び出して結果を返す
@@ -72,17 +80,61 @@ class AiMailController extends Controller
     }
 
     // AIメール作成ページ表示（受付・管理者のみ）
+    // アクセスのたびに ai_mail_verified フラグを pull（取り出し＆削除）して確認する
+    // フラグがなければパスワード確認画面を表示し、ai_mail_auth もリセットする
     public function create(Inquiry $inquiry)
     {
         $this->checkRole();
 
-        return view('inquiry.ai_mail', compact('inquiry'));
+        // pull() はセッション値を取り出した瞬間に削除する
+        // verifyPassword() 経由のリダイレクトでなければ null になる
+        if (!session()->pull('ai_mail_verified')) {
+            session()->forget('ai_mail_auth');
+            return view('inquiry.ai_mail_password', compact('inquiry'));
+        }
+
+        // パスワード確認済み：このページ滞在中のみ有効なフラグを立てる
+        session(['ai_mail_auth' => true]);
+
+        // この問い合わせの送信履歴を新しい順に取得する
+        $mailLogs = MailLog::with('sentBy')
+                           ->where('inquiry_id', $inquiry->id)
+                           ->orderBy('created_at', 'desc')
+                           ->get();
+
+        return view('inquiry.ai_mail', compact('inquiry', 'mailLogs'));
+    }
+
+    // パスワード確認処理
+    public function verifyPassword(Request $request, Inquiry $inquiry)
+    {
+        $this->checkRole();
+
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        // 入力されたパスワードとDBのパスワードを照合する
+        if (!Hash::check($request->password, auth()->user()->password)) {
+            return redirect()->route('ai_mail.create', $inquiry)
+                ->with('auth_error', 'パスワードが正しくありません。');
+        }
+
+        // create() で pull() して使い捨てにするフラグを保存する
+        session(['ai_mail_verified' => true]);
+
+        return redirect()->route('ai_mail.create', $inquiry);
     }
 
     // ChatGPT APIを呼び出してメール文章を生成・添削する（AJAX用）
     public function generate(Request $request, Inquiry $inquiry)
     {
         $this->checkRole();
+
+        // パスワード未確認の場合はエラーを返す
+        if (!$this->isVerified()) {
+            return response()->json(['error' => '認証が必要です。ページを再読み込みしてください。']);
+        }
 
         // 「type」は "generate"（生成）か "proofread"（添削）のどちらか
         $request->validate([
@@ -132,6 +184,12 @@ class AiMailController extends Controller
     {
         $this->checkRole();
 
+        // パスワード未確認の場合は確認画面に戻す
+        if (!$this->isVerified()) {
+            return redirect()->route('ai_mail.create', $inquiry)
+                ->with('auth_error', 'パスワード認証が必要です。');
+        }
+
         $request->validate([
             'subject' => 'required|string|max:200',
             'body'    => 'required|string',
@@ -149,7 +207,18 @@ class AiMailController extends Controller
                     ->subject($request->subject);
         });
 
-        // 予約確定後はお問い合わせ詳細ページへ遷移する
+        // 送信内容をログとして保存する
+        MailLog::create([
+            'inquiry_id' => $inquiry->id,
+            'sent_by'    => auth()->id(),
+            'to_email'   => $inquiry->parent_email,
+            'subject'    => $request->subject,
+            'body'       => $request->body,
+        ]);
+
+        // 送信後はフラグを削除する（次回アクセス時に再度パスワードが必要になる）
+        session()->forget('ai_mail_auth');
+
         return redirect()->route('inquiry.show', $inquiry)
             ->with('success', 'メールを送信しました。');
     }
